@@ -1,8 +1,15 @@
-#include <iostream>
+#include "terminal.h"
+#include <cstdlib>
+#include "editor.h"
+#include "render.h"
 
 int main () {
-
-  std::cout << "Bolt cpp is a text editor " << std::endl ; 
-
-  return 0;
+  while (1) {
+    enableRawMode();
+    initEditor();
+    refreshScreen();
+  };
+  
+  disableRawMode(); 
+  return EXIT_SUCCESS;
 };
