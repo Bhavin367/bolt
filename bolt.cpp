@@ -4,9 +4,9 @@
 #include "render.h"
 
 int main () {
+  enableRawMode();
+  initEditor();
   while (1) {
-    enableRawMode();
-    initEditor();
     refreshScreen();
   };
   

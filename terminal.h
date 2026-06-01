@@ -2,9 +2,9 @@
 #include <termios.h>
 #include <unistd.h>
 
-void enableRawMode();
-
 void disableRawMode();
+
+void enableRawMode();
 
 
 

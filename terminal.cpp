@@ -1,9 +1,13 @@
 #include "terminal.h"
+#include <cstdlib>
 #include <termios.h>
 #include <unistd.h>
 
 static struct termios orig_termios ; 
 
+void disableRawMode(){
+  tcsetattr(STDOUT_FILENO,TCSAFLUSH,&orig_termios);
+};
 void enableRawMode(){
   tcgetattr(STDIN_FILENO,&orig_termios);
   struct termios raw = orig_termios ; 
@@ -17,8 +21,7 @@ void enableRawMode(){
   raw.c_cflag |= CS8;
 
   tcsetattr(STDIN_FILENO,TCSAFLUSH,&raw);
+
+  std::atexit(disableRawMode());
 };
 
-void disableRawMode(){
-  tcsetattr(STDOUT_FILENO,TCSAFLUSH,&orig_termios);
-};
