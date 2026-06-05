@@ -16,3 +16,7 @@ void getWinSize(){
   E.screencols = ws.ws_col  ; 
   E.screenrows = ws.ws_row  ; 
 };
+
+void editorReadKey(){
+  int nread ;
+};

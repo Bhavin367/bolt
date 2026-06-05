@@ -13,3 +13,7 @@ extern editorConfig E ;
 void initEditor();
 
 void getWinSize();
+
+void editorReadKey();
+
+void editorProcessKey();
