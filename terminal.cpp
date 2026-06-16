@@ -1,16 +1,18 @@
 #include "terminal.h"
+#include <unistd.h>
 
 
 static struct termios orig_termios ; 
 
 void disableRawMode(){
-  tcsetattr(STDOUT_FILENO,TCSAFLUSH,&orig_termios);
+  tcsetattr(STDIN_FILENO,TCSAFLUSH,&orig_termios);
 };
 
 void enableRawMode(){
   tcgetattr(STDIN_FILENO,&orig_termios);
   struct termios raw = orig_termios ; 
 
+  std::atexit(disableRawMode);
 
   raw.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP
                  | INLCR | IGNCR | ICRNL | IXON);
@@ -21,6 +23,5 @@ void enableRawMode(){
 
   tcsetattr(STDIN_FILENO,TCSAFLUSH,&raw);
 
-  std::atexit(disableRawMode);
 };
 

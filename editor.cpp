@@ -1,5 +1,6 @@
 #include "editor.h"
-#include <sys/ioctl.h>
+#include <cstdlib>
+#include "utils.h"
 
 editorConfig E ;
 
@@ -11,12 +12,33 @@ void initEditor(){
 
 void getWinSize(){
   struct winsize ws ; 
-  ioctl(1,TIOCGWINSZ,&ws);
+  if(ioctl(1,TIOCGWINSZ,&ws) == -1 || ws.ws_col == 0 ){
+    die("Get winsize() -- editor ");
+  };
 
   E.screencols = ws.ws_col  ; 
   E.screenrows = ws.ws_row  ; 
 };
 
-void editorReadKey(){
+int editorReadKey(){
   int nread ;
+  char c ; 
+
+  while ((nread = read(STDIN_FILENO, &c,1 )) != 1){
+    if (nread == 1 && errno != EAGAIN) die("Editor read key "); 
+  };
+
+  return c ; 
+};
+
+void editorProcessKey(){
+  int c = editorReadKey();
+
+  switch (c) {
+    case ctrl('q'):
+      write(STDOUT_FILENO,"\x1b[2J",4); 
+      write(STDOUT_FILENO,"\x1b[H",3); 
+      std::exit(EXIT_SUCCESS) ; // without exit() program wont actually stop  
+      break ; 
+  }
 };
