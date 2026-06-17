@@ -10,6 +10,8 @@ void getWinSize();
 
 void initEditor();
 
+void editorMoveCursor(const char key);
+
 int editorReadKey();
 
 void editorProcessKey();

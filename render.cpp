@@ -23,8 +23,10 @@ void refreshScreen(){
   appendBuff.append("\x1b[H"); 
   drawRows(appendBuff);
 
-  appendBuff.append("\x1b[H");
-
+  // cursor positioning
+  
+  appendBuff.append(std::format("\x1b[{};{}H",E.cy + 1 , E.cx + 1));
+  
   appendBuff.append("\x1b[?25h"); // show cursor 
   write(STDOUT_FILENO, appendBuff.c_str(),appendBuff.size());
 

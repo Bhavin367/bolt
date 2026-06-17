@@ -31,6 +31,27 @@ int editorReadKey(){
   return c ; 
 };
 
+
+void editorMoveCursor(const char key){
+  switch (key) {
+    case 'h':
+      E.cx -- ; 
+      break ; 
+    case 'j' : 
+      E.cy ++ ; 
+      break ; 
+    case 'k' : 
+      E.cy -- ; 
+      break ; 
+    case 'l' : 
+      E.cx ++ ; 
+      break ; 
+
+
+  }
+};
+
+
 void editorProcessKey(){
   int c = editorReadKey();
 
@@ -40,5 +61,14 @@ void editorProcessKey(){
       write(STDOUT_FILENO,"\x1b[H",3); 
       std::exit(EXIT_SUCCESS) ; // without exit() program wont actually stop  
       break ; 
+
+    case 'h' :
+    case 'k' : 
+    case 'j' : 
+    case 'l' : 
+      editorMoveCursor(c) ; 
+      break ; 
   }
 };
+
+
