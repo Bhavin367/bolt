@@ -35,13 +35,13 @@ int editorReadKey(){
 void editorMoveCursor(const char key){
   switch (key) {
     case 'h':
-      E.cx -- ; 
+      E.cx = (E.cx > 0 ) ? E.cx - 1 : 0 ; 
       break ; 
     case 'j' : 
       E.cy ++ ; 
       break ; 
     case 'k' : 
-      E.cy -- ; 
+      E.cy = (E.cy > 0 ) ? E.cy -1 : 0 ; 
       break ; 
     case 'l' : 
       E.cx ++ ; 
