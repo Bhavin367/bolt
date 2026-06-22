@@ -1,13 +1,16 @@
 #include "editor.h"
-#include <cstdlib>
-#include "utils.h"
+#include "type.h"
+#include <type_traits>
+#include <unistd.h>
 
 editorConfig E ;
 
 void initEditor(){
-  E.cx = 0; 
-  E.cy = 0 ; 
   getWinSize();
+  E.rowNumSize = numWidth(E.screenrows) + 2 ;
+  E.cx = E.rowNumSize; 
+  E.cy = 0 ; 
+  E.editorMode = 'e'; 
 };
 
 void getWinSize(){
@@ -28,47 +31,92 @@ int editorReadKey(){
     if (nread == 1 && errno != EAGAIN) die("Editor read key "); 
   };
 
+  if ( c == '\x1b'){ // checking if its an arrow key  
+    char seq[3] ;  
+
+    if (read(STDIN_FILENO, &seq[0],1) != 1) return '\x1b' ;  
+    if (read(STDIN_FILENO, &seq[1],1) != 1) return '\x1b' ; 
+
+    if (seq[0] == '[' ){
+      
+      // page up and down got ESC[5~ , ESC[6~ , del is ESC[3~
+      if (seq[1] >= '0' && seq[1] <= '9'){
+        if (read(STDIN_FILENO,&seq[2],1) != 1) return '\x1b' ; 
+
+        if (seq[2] == '~'){
+          switch (seq[1]){
+            case '1' : return HOME ;
+            case '4' : return END ; 
+            case '5' : return PAGE_UP ; 
+            case '6' : return PAGE_DOWN ;  
+          };
+        };
+
+      }else {
+        switch (seq[1]){
+          case 'A' : return UP;
+          case 'B' : return DOWN ; 
+          case 'C' : return RIGHT  ; 
+          case 'D' : return LEFT ;
+        };
+      }
+    };
+  } 
+
   return c ; 
 };
 
 
-void editorMoveCursor(const char key){
-  switch (key) {
-    case 'h':
-      E.cx = (E.cx > 0 ) ? E.cx - 1 : 0 ; 
-      break ; 
-    case 'j' : 
-      E.cy ++ ; 
-      break ; 
-    case 'k' : 
-      E.cy = (E.cy > 0 ) ? E.cy -1 : 0 ; 
-      break ; 
-    case 'l' : 
-      E.cx ++ ; 
-      break ; 
+void editorMoveCursor(const int key){
+    switch (key) {
+      case 'h' :
+      case LEFT :  
+        E.cx = (E.cx > E.rowNumSize) ? E.cx - 1 : E.rowNumSize ; 
+        break ; 
+      
+      case 'j' :
+      case DOWN : 
+        E.cy ++ ; 
+        break ; 
+      
+      case 'k' : 
+      case UP :  
+        E.cy = (E.cy > 0 ) ? E.cy -1 : 0 ; 
+        break ;
 
+      case 'l' : 
+      case RIGHT :  
+        E.cx ++ ; 
+        break ; 
+      }
 
-  }
 };
 
 
 void editorProcessKey(){
   int c = editorReadKey();
 
-  switch (c) {
-    case ctrl('q'):
-      write(STDOUT_FILENO,"\x1b[2J",4); 
-      write(STDOUT_FILENO,"\x1b[H",3); 
-      std::exit(EXIT_SUCCESS) ; // without exit() program wont actually stop  
-      break ; 
+  if (E.editorMode == 'e'){
+    switch (c) {
+      case ctrl('q'):
+        write(STDOUT_FILENO,"\x1b[2J",4); 
+        write(STDOUT_FILENO,"\x1b[H",3); 
+        std::exit(EXIT_SUCCESS) ; // without exit() program wont actually stop  
+        break ; 
 
-    case 'h' :
-    case 'k' : 
-    case 'j' : 
-    case 'l' : 
-      editorMoveCursor(c) ; 
-      break ; 
-  }
+      case 'h' :
+      case 'k' : 
+      case 'j' : 
+      case 'l' : 
+      case UP : 
+      case DOWN : 
+      case LEFT : 
+      case RIGHT : 
+        editorMoveCursor(c) ; 
+        break ; 
+    }
+  };
+
 };
 
 

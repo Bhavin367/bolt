@@ -10,7 +10,7 @@ void getWinSize();
 
 void initEditor();
 
-void editorMoveCursor(const char key);
+void editorMoveCursor(const int key); // technically char is an int and custom keys wont work if i passed char 
 
 int editorReadKey();
 
