@@ -1,9 +1,10 @@
 #pragma once
 #include <string>
+#include <vector>
 
 struct erow {
   std::string chars ; 
-  int size = chars.size();
+  size_t size() const{ return chars.size(); } ; 
 };
 
 typedef struct editorConfig {
@@ -12,8 +13,8 @@ typedef struct editorConfig {
   int screencols ; 
   int rowNumSize ; // for better spacing and stuff   
   char editorMode ; // similar to nvim  
-  erow row ; 
-  int numrows ; 
+  std::vector<erow> rows ; 
+  int numrows() const { return rows.size() ; }; // it updates itself then , hopefully  
 } editorConfig ; 
 
 

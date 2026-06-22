@@ -11,10 +11,14 @@ void drawRows(std::string &ab){
 
     ab.append("\x1b[K"); // clears one line 
 
+    if ( y < E.rows.size()){
+      int len = E.rows[y].size() ; 
+      if ( len > E.screencols ) len = E.screencols ;
+      ab.append(" ") ; 
+      ab.append(E.rows[y].chars);
+    }
+
     if ( y < E.screenrows - 1){
-      int len = E.row.size; 
-      if (len > E.screencols ) len = E.screencols ; 
-      ab.append(E.row.chars);
       ab += "\r\n"; 
     };
   };
