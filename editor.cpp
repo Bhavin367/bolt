@@ -1,6 +1,5 @@
 #include "editor.h"
 #include "type.h"
-#include <type_traits>
 #include <unistd.h>
 
 editorConfig E ;
@@ -11,7 +10,9 @@ void initEditor(){
   E.cx = E.rowNumSize; 
   E.cy = 0 ; 
   E.editorMode = 'e'; 
+  write(STDOUT_FILENO,"\x1b[2 q",5);  // i need that block intially , we can change when user switch to read/write  
 };
+// \x1b[6 q gives that normal line, make it 5 for blinking  
 
 void getWinSize(){
   struct winsize ws ; 
@@ -49,6 +50,8 @@ int editorReadKey(){
             case '4' : return END ; 
             case '5' : return PAGE_UP ; 
             case '6' : return PAGE_DOWN ;  
+            case '7' : return HOME ; 
+            case '8' : return END ; 
           };
         };
 
@@ -58,13 +61,22 @@ int editorReadKey(){
           case 'B' : return DOWN ; 
           case 'C' : return RIGHT  ; 
           case 'D' : return LEFT ;
+          case 'H' : return HOME ; 
+          case 'F' : return END  ;
         };
+      }
+    } else if ( seq[0] == 'O'){
+      switch (seq[1]) {
+        case 'H' : return HOME;
+        case 'F' : return END; 
       }
     };
   } 
 
   return c ; 
 };
+// HOME and END  keys are pretty weird some uses ESC[4~ and ESC[5~ , some uses 7 and 8 , 
+// apparently kitty uses ESCOH and ESCOF makes no damn sense 
 
 
 void editorMoveCursor(const int key){
@@ -88,7 +100,17 @@ void editorMoveCursor(const int key){
       case RIGHT :  
         E.cx ++ ; 
         break ; 
-      }
+
+      case '0' : 
+      case HOME : 
+        E.cx = E.rowNumSize ; 
+        break ; 
+
+      case '$' : 
+      case END :
+        E.cx = E.screencols ; 
+        break ; 
+    }
 
 };
 
@@ -112,6 +134,10 @@ void editorProcessKey(){
       case DOWN : 
       case LEFT : 
       case RIGHT : 
+      case HOME : 
+      case END : 
+      case '$' : 
+      case '0' : 
         editorMoveCursor(c) ; 
         break ; 
     }
