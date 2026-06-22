@@ -12,7 +12,7 @@ void die(const char* err){
 int numWidth(int rowNo){
   int count = 1 ;
 
-  while (rowNo > 10 ) {
+  while (rowNo >= 10 ) {
     rowNo = rowNo/10 ; 
     ++count ;  
   }; 

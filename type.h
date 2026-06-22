@@ -1,4 +1,10 @@
 #pragma once
+#include <string>
+
+struct erow {
+  std::string chars ; 
+  int size = chars.size();
+};
 
 typedef struct editorConfig {
   int cx, cy ; 
@@ -6,6 +12,8 @@ typedef struct editorConfig {
   int screencols ; 
   int rowNumSize ; // for better spacing and stuff   
   char editorMode ; // similar to nvim  
+  erow row ; 
+  int numrows ; 
 } editorConfig ; 
 
 
@@ -21,3 +29,4 @@ enum editorKey {
   HOME , 
   END ,
 };
+

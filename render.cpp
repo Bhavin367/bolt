@@ -4,13 +4,17 @@ void drawRows(std::string &ab){
   int y ; 
 
   for ( y = 0 ; y < E.screenrows ; ++y){
-    std::string rowNo = std::to_string(y); 
+    std::string rowNo = std::format("{:>{}}",y + 1 , E.rowNumSize - 2);
+    // format allows aligning , :> right align 
     ab.append(" "); 
     ab.append(rowNo) ; 
 
     ab.append("\x1b[K"); // clears one line 
 
     if ( y < E.screenrows - 1){
+      int len = E.row.size; 
+      if (len > E.screencols ) len = E.screencols ; 
+      ab.append(E.row.chars);
       ab += "\r\n"; 
     };
   };
