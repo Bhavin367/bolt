@@ -1,5 +1,6 @@
 #include "editor.h"
 #include "type.h"
+#include "utils.h"
 #include <unistd.h>
 
 editorConfig E ;
@@ -112,6 +113,28 @@ void editorMoveCursor(const int key){
       case END :
         E.cx = E.screencols ; 
         break ; 
+   
+      case PAGE_UP : 
+      case ctrl('k'):
+        
+        if (E.cy > E.screenrows) {
+          E.cy -= E.screenrows -1 ; 
+        } else {
+          E.cy = 0 ; 
+        }; 
+
+        break ;
+
+      case PAGE_DOWN : 
+      case ctrl('j'):
+        
+        if (E.cy + E.screenrows < E.numrows()){
+          E.cy += E.screenrows - 1;
+        } else {
+          E.cy = E.numrows() - 1 ; 
+        };
+
+        break ; 
     }
 
 };
@@ -140,6 +163,10 @@ void editorProcessKey(){
       case END : 
       case '$' : 
       case '0' : 
+      case PAGE_DOWN : 
+      case PAGE_UP : 
+      case ctrl('j'):
+      case ctrl('k'):
         editorMoveCursor(c) ; 
         break ; 
     }
