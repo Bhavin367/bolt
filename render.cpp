@@ -1,21 +1,33 @@
 #include "render.h"
 
+void handleScroll(){
+
+  if (E.cy < E.rowoff ) E.rowoff = E.cy ;
+
+  if ( E.cy >= E.rowoff + E.screenrows ){
+    E.rowoff = E.cy - E.screenrows + 1;
+  };
+
+};
+
 void drawRows(std::string &ab){
   int y ; 
 
   for ( y = 0 ; y < E.screenrows ; ++y){
-    std::string rowNo = std::format("{:>{}}",y + 1 , E.rowNumSize - 2);
+    int filerow = y + E.rowoff ; // rowoff is essentially rows that are hidden  
+    std::string rowNo = std::format("{:>{}}",filerow + 1 , E.rowNumSize - 2);
     // format allows aligning , :> right align 
+   
     ab.append(" "); 
     ab.append(rowNo) ; 
 
     ab.append("\x1b[K"); // clears one line 
 
-    if ( y < E.rows.size()){
-      int len = E.rows[y].size() ; 
+    if ( filerow < E.numrows()){
+      int len = E.rows[filerow].size() ; 
       if ( len > E.screencols ) len = E.screencols ;
       ab.append(" ") ; 
-      ab.append(E.rows[y].chars);
+      ab.append(E.rows[filerow].chars);
     }
 
     if ( y < E.screenrows - 1){
@@ -25,6 +37,7 @@ void drawRows(std::string &ab){
 };
 
 void refreshScreen(){
+  handleScroll(); 
   std::string appendBuff ; 
 
   appendBuff.append("\x1b[?25l"); // hides cursor 
@@ -33,7 +46,7 @@ void refreshScreen(){
 
   // cursor positioning
   
-  appendBuff.append(std::format("\x1b[{};{}H",E.cy + 1 , E.cx + 1));
+  appendBuff.append(std::format("\x1b[{};{}H",(E.cy - E.rowoff) + 1 , E.cx + 1));
   
   appendBuff.append("\x1b[?25h"); // show cursor 
   write(STDOUT_FILENO, appendBuff.c_str(),appendBuff.size());

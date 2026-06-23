@@ -15,6 +15,8 @@ typedef struct editorConfig {
   char editorMode ; // similar to nvim  
   std::vector<erow> rows ; 
   int numrows() const { return rows.size() ; }; // it updates itself then , hopefully  
+  int rowoff ; 
+  int coloff ; 
 } editorConfig ; 
 
 

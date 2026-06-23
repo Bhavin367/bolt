@@ -10,6 +10,8 @@ void initEditor(){
   E.cx = E.rowNumSize; 
   E.cy = 0 ; 
   E.editorMode = 'e'; 
+  E.rowoff = 0 ; 
+  E.coloff = 0 ; 
   write(STDOUT_FILENO,"\x1b[2 q",5);  // i need that block intially , we can change when user switch to read/write  
 };
 // \x1b[6 q gives that normal line, make it 5 for blinking  
@@ -88,7 +90,7 @@ void editorMoveCursor(const int key){
       
       case 'j' :
       case DOWN : 
-        E.cy ++ ; 
+        E.cy <= E.numrows() ? ++E.cy : E.cy = E.numrows() + 1 ; 
         break ; 
       
       case 'k' : 

@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <format>
 
+void handleScroll();
+
 void drawRows(std::string &ab);
 
 void refreshScreen();
