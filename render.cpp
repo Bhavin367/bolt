@@ -1,4 +1,5 @@
 #include "render.h"
+#include "utils.h"
 
 void handleScroll(){
 
@@ -8,6 +9,9 @@ void handleScroll(){
     E.rowoff = E.cy - E.screenrows + 1;
   };
 
+  if (E.cx < E.rowNumSize ) {
+    E.cx = E.rowNumSize ; 
+  };
 };
 
 void drawRows(std::string &ab){
@@ -37,6 +41,7 @@ void drawRows(std::string &ab){
 };
 
 void refreshScreen(){
+  E.rowNumSize = numWidth(E.numrows()) + 2 ;
   handleScroll(); 
   std::string appendBuff ; 
 
@@ -50,5 +55,5 @@ void refreshScreen(){
   
   appendBuff.append("\x1b[?25h"); // show cursor 
   write(STDOUT_FILENO, appendBuff.c_str(),appendBuff.size());
-
+  
 };

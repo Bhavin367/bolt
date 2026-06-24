@@ -5,6 +5,8 @@
 #include <cerrno>
 #include "terminal.h"
 #include "type.h"
+#include <format>
+
 
 void getWinSize();
 

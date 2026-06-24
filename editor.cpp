@@ -1,19 +1,20 @@
 #include "editor.h"
-#include "type.h"
-#include "utils.h"
-#include <unistd.h>
 
 editorConfig E ;
 
 void initEditor(){
   getWinSize();
-  E.rowNumSize = numWidth(E.screenrows) + 2 ;
+  E.rowNumSize = numWidth(E.numrows()) + 2 ;
   E.cx = E.rowNumSize; 
   E.cy = 0 ; 
   E.editorMode = 'e'; 
   E.rowoff = 0 ; 
   E.coloff = 0 ; 
-  write(STDOUT_FILENO,"\x1b[2 q",5);  // i need that block intially , we can change when user switch to read/write  
+  
+  std::string curIn; // i meant cursor initialisation 
+  curIn.append("\x1b[2 q"); // i need that block intially , we can change when user switch to read/write  
+  curIn.append(std::format("\x1b[{};{}H",1,E.rowNumSize + 2));
+  write(STDOUT_FILENO, curIn.c_str(),curIn.size());
 };
 // \x1b[6 q gives that normal line, make it 5 for blinking  
 
