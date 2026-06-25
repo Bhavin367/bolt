@@ -10,11 +10,9 @@ void initEditor(){
   E.editorMode = 'e'; 
   E.rowoff = 0 ; 
   E.coloff = 0 ; 
-  
   std::string curIn; // i meant cursor initialisation 
-  curIn.append("\x1b[2 q"); // i need that block intially , we can change when user switch to read/write  
-  curIn.append(std::format("\x1b[{};{}H",1,E.rowNumSize + 2));
-  write(STDOUT_FILENO, curIn.c_str(),curIn.size());
+
+  write(STDOUT_FILENO,"\x1b[2 q",5);// i need that block intially , we can change when user switch to read/write  
 };
 // \x1b[6 q gives that normal line, make it 5 for blinking  
 
@@ -87,12 +85,12 @@ void editorMoveCursor(const int key){
     switch (key) {
       case 'h' :
       case LEFT :  
-        E.cx = (E.cx > E.rowNumSize) ? E.cx - 1 : E.rowNumSize ; 
+        E.cx = (E.cx > E.rowNumSize + 1 ) ? E.cx - 1 : E.rowNumSize + 1 ; 
         break ; 
       
       case 'j' :
       case DOWN : 
-        E.cy <= E.numrows() ? ++E.cy : E.cy = E.numrows() + 1 ; 
+        E.cy <= E.numrows() + E.screenrows  ? ++E.cy : E.cy = E.numrows() + E.screenrows + 1; 
         break ; 
       
       case 'k' : 
