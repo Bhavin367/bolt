@@ -1,8 +1,9 @@
 #pragma once 
-#include <iostream>
 #include "type.h" 
 #include <unistd.h>
 #include <format>
+#include "utils.h"
+#include <string>
 
 void handleScroll();
 

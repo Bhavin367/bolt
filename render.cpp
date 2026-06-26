@@ -1,6 +1,4 @@
 #include "render.h"
-#include "utils.h"
-#include <iostream>
 
 void handleScroll(){
 
@@ -12,6 +10,14 @@ void handleScroll(){
 
   if (E.cx < E.rowNumSize ) {
     E.cx = E.rowNumSize ; 
+  }; // dont touch it if even if it dont make sense later , it only makes sense at 3 am for some reaon  
+
+  if (E.cx < E.coloff ){
+    E.coloff = E.cx ;
+  };  
+
+  if (E.cx > E.coloff + E.screencols ) {
+    E.coloff = E.cx - E.screencols + 1;
   };
 };
 
@@ -28,10 +34,11 @@ void drawRows(std::string &ab){
     ab.append("\x1b[K"); // clears one line 
 
     if ( filerow < E.numrows()){
-      int len = E.rows[filerow].size() ; 
-      if ( len > E.screencols ) len = E.screencols ;
+      int len = (int)E.rows[filerow].size() - E.coloff ; // apparently this guy was giving size_t we need INT  
+      len = len <= 0 ? 0 : len ; 
+      if ( len > E.screencols - 2) len = E.screencols - 2 ;
       ab.append(" ") ; 
-      ab.append(E.rows[filerow].chars);
+      ab.append(E.rows[filerow].chars.substr(E.coloff,len));
     }
 
     if ( y < E.screenrows - 1){
@@ -51,7 +58,7 @@ void refreshScreen(){
 
   // cursor positioning
   
-  appendBuff.append(std::format("\x1b[{};{}H",(E.cy - E.rowoff) + 1 , E.cx + 2));
+  appendBuff.append(std::format("\x1b[{};{}H",(E.cy - E.rowoff) + 1 , ( E.cx - E.coloff ) + 2));
   
   appendBuff.append("\x1b[?25h"); // show cursor 
   write(STDOUT_FILENO, appendBuff.c_str(),appendBuff.size());

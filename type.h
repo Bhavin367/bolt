@@ -5,6 +5,7 @@
 struct erow {
   std::string chars ; 
   size_t size() const{ return chars.size(); } ; 
+  std::string render ;
 };
 
 typedef struct editorConfig {
