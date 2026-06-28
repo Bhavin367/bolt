@@ -85,7 +85,7 @@ void editorMoveCursor(const int key){
     switch (key) {
       case 'h' :
       case LEFT :  
-        E.cx = (E.cx > E.rowNumSize + 1 ) ? E.cx - 1 : E.rowNumSize + 1 ; 
+        E.cx = (E.cx > E.rowNumSize  ) ? E.cx - 1 : E.rowNumSize  ; 
         break ; 
       
       case 'j' :

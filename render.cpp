@@ -38,7 +38,7 @@ void drawRows(std::string &ab){
       len = len <= 0 ? 0 : len ; 
       if ( len > E.screencols - 2) len = E.screencols - 2 ;
       ab.append(" ") ; 
-      ab.append(E.rows[filerow].chars.substr(E.coloff,len));
+      if (len > 0 ) ab.append(E.rows[filerow].chars,E.coloff,len);
     }
 
     if ( y < E.screenrows - 1){
