@@ -16,7 +16,7 @@ void handleScroll(){
     E.coloff = E.cx ;
   };  
 
-  if (E.cx > E.coloff + E.screencols ) {
+  if (E.cx >= E.coloff + E.screencols ) {
     E.coloff = E.cx - E.screencols + 1;
   };
 };

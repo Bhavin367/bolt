@@ -126,10 +126,11 @@ void editorMoveCursor(const int key){
 
       case PAGE_DOWN : 
       case ctrl('j'):
-        if (!E.numrows() || E.numrows() == 0 ){
+        if ( ( !E.numrows() || E.numrows() == 0 ) ){
           E.cy = E.screenrows - 1 ;
+          break ; 
         }; 
-        
+
         if (E.cy + E.screenrows < E.numrows()){
           E.cy += E.screenrows - 1;
         } else {
