@@ -33,7 +33,7 @@ void drawRows(std::string &ab){
 
     ab.append("\x1b[K"); // clears one line 
 
-    if ( filerow < E.numrows()){
+    if ( E.numrows() &&  filerow < E.numrows()){
       int len = (int)E.rows[filerow].size() - E.coloff ; // apparently this guy was giving size_t we need INT  
       len = len <= 0 ? 0 : len ; 
       if ( len > E.screencols - 2) len = E.screencols - 2 ;
