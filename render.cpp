@@ -8,10 +8,6 @@ void handleScroll(){
     E.rowoff = E.cy - E.screenrows + 1;
   };
 
-  if (E.cx < E.rowNumSize ) {
-    E.cx = E.rowNumSize ; 
-  }; // dont touch it if even if it dont make sense later , it only makes sense at 3 am for some reaon  
-
   if (E.cx < E.coloff ){
     E.coloff = E.cx ;
   };  
@@ -58,7 +54,7 @@ void refreshScreen(){
 
   // cursor positioning
   
-  appendBuff.append(std::format("\x1b[{};{}H",(E.cy - E.rowoff) + 1 , ( E.cx - E.coloff ) + 2));
+  appendBuff.append(std::format("\x1b[{};{}H",(E.cy - E.rowoff) + 1 , ( E.cx - E.coloff ) + E.rowNumSize + 2));
   
   appendBuff.append("\x1b[?25h"); // show cursor 
   write(STDOUT_FILENO, appendBuff.c_str(),appendBuff.size());
