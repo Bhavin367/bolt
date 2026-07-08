@@ -1,4 +1,5 @@
 #include "render.h"
+#include <unistd.h>
 
 void handleScroll(){
 
@@ -41,6 +42,18 @@ void drawRows(std::string &ab){
   };
 };
 
+void drawStatusBar(std::string& ab){
+  int len = 0 ; 
+   
+  ab.append("\x1b[7m");
+  while ( len < E.screencols ) {
+    ab += " " ;
+    ++len; 
+  };
+
+  ab.append("\x1b[m");
+};
+
 void refreshScreen(){
   E.rowNumSize = numWidth(E.numrows()) + 2 ;
   handleScroll(); 
@@ -49,7 +62,8 @@ void refreshScreen(){
   appendBuff.append("\x1b[?25l"); // hides cursor 
   appendBuff.append("\x1b[H"); 
   drawRows(appendBuff);
-
+  drawStatusBar(appendBuff);
+  
   // cursor positioning
   
   appendBuff.append(std::format("\x1b[{};{}H",(E.cy - E.rowoff) + 1 , ( E.cx - E.coloff ) + E.rowNumSize + 2));

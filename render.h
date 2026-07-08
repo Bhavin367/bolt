@@ -9,4 +9,6 @@ void handleScroll();
 
 void drawRows(std::string &ab);
 
+void drawStatusBar(std::string &ab);
+
 void refreshScreen();
