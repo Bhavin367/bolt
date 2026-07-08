@@ -1,4 +1,5 @@
 #include "editor.h"
+#include "utils.h"
 
 editorConfig E ;
 
@@ -10,7 +11,7 @@ void initEditor(){
   E.editorMode = 'e'; 
   E.rowoff = 0 ; 
   E.coloff = 0 ; 
-  std::string curIn; // i meant cursor initialisation 
+  E.screenrows-- ; // this one's for status barrrr
 
   write(STDOUT_FILENO,"\x1b[2 q",5);// i need that block intially , we can change when user switch to read/write  
 };
@@ -104,12 +105,14 @@ void editorMoveCursor(const int key){
         break ; 
 
       case '0' : 
-      case HOME : 
+      case HOME :
+      case ctrl('h'):
         E.cx = 0; 
         break ; 
 
       case '$' : 
       case END :
+      case ctrl('l'): 
         E.cx = E.screencols ; 
         break ; 
    
@@ -170,6 +173,8 @@ void editorProcessKey(){
       case PAGE_UP : 
       case ctrl('j'):
       case ctrl('k'):
+      case ctrl('h'):
+      case ctrl('l'):
         editorMoveCursor(c) ; 
         break ; 
     }
