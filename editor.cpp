@@ -11,7 +11,9 @@ void initEditor(){
   E.editorMode = 'e'; 
   E.rowoff = 0 ; 
   E.coloff = 0 ; 
-  E.screenrows-- ; // this one's for status barrrr 
+  E.screenrows -= 2 ; // this one's for status barrrr 
+  
+  // E.filename stays null unless added by file part 
 
   write(STDOUT_FILENO,"\x1b[2 q",5);// i need that block intially , we can change when user switch to read/write  
 };

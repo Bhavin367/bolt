@@ -2,7 +2,10 @@
 
 void openFile(const std::string& filename){
   std::ifstream fp(filename);
+   
   if (!fp.is_open()) die("Open file function failed to open !!!");
+  
+  E.filename = filename ;
 
   std::string line ;
 

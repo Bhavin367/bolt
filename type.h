@@ -18,6 +18,7 @@ typedef struct editorConfig {
   int numrows() const { return rows.size() ; }; // it updates itself then , hopefully  
   int rowoff ; 
   int coloff ; 
+  std::string filename ;
 } editorConfig ; 
 
 

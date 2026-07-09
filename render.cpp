@@ -23,11 +23,14 @@ void drawRows(std::string &ab){
 
   for ( y = 0 ; y < E.screenrows ; ++y){
     int filerow = y + E.rowoff ; // rowoff is essentially rows that are hidden  
+    ab.append("\x1b[2m"); // faint mode for numberings  
+    
     std::string rowNo = std::format("{:>{}}",filerow + 1  , E.rowNumSize );
     // format allows aligning , :> right align 
-   
-    ab.append(rowNo) ; 
+    
 
+    ab.append(rowNo) ; 
+    ab.append("\x1b[m");
     ab.append("\x1b[K"); // clears one line 
 
     if ( E.numrows() &&  filerow < E.numrows()){
@@ -37,15 +40,23 @@ void drawRows(std::string &ab){
       ab.append(" ") ; 
       if (len > 0 ) ab.append(E.rows[filerow].chars,E.coloff,len);
     }
-
       ab += "\r\n"; 
   };
 };
 
 void drawStatusBar(std::string& ab){
+  ab.append("\x1b[7;40m");
+  
   int len = 0 ; 
-   
-  ab.append("\x1b[7m");
+  std::string fileName = E.filename.empty() ? "[No Name]" : E.filename ;
+  
+  len = fileName.length() ;
+  if(len > E.screencols ) len = E.screencols ; 
+
+  if ( len > 22 ) fileName = fileName.substr(0,22);
+  
+  ab.append(fileName);
+
   while ( len < E.screencols ) {
     ab += " " ;
     ++len; 
