@@ -1,5 +1,4 @@
 #include "render.h"
-#include <string>
 
 void handleScroll(){
 
@@ -22,10 +21,10 @@ void drawRows(std::string &ab){
   int y ; 
 
   for ( y = 0 ; y < E.screenrows ; ++y){
-    int filerow = y + E.rowoff ; // rowoff is essentially rows that are hidden  
+    int filerow = y + E.rowoff; // rowoff is essentially rows that are hidden  
     ab.append("\x1b[2m"); // faint mode for numberings  
     
-    std::string rowNo = std::format("{:>{}}",filerow + 1  , E.rowNumSize );
+    std::string rowNo = std::format("{:>{}}",filerow + 1  , E.rowNumSize );  // for future me i intentionally added that + 1
     // format allows aligning , :> right align 
     
 
@@ -83,7 +82,7 @@ void refreshScreen(){
   
   // cursor positioning
   
-  appendBuff.append(std::format("\x1b[{};{}H",(E.cy - E.rowoff) + 1 , ( E.cx - E.coloff ) + E.rowNumSize + 2));
+  appendBuff.append(std::format("\x1b[{};{}H",(E.cy - E.rowoff) + 1 , ( E.cx - E.coloff ) + E.rowNumSize + 2 ));
   
   appendBuff.append("\x1b[?25h"); // show cursor 
   write(STDOUT_FILENO, appendBuff.c_str(),appendBuff.size());

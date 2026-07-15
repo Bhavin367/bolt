@@ -6,7 +6,7 @@ editorConfig E ;
 void initEditor(){
   getWinSize();
   E.rowNumSize = numWidth(E.numrows()) + 2 ;
-  E.cx = E.rowNumSize; 
+  E.cx = 0; 
   E.cy = 0 ; 
   E.editorMode = 'e'; 
   E.rowoff = 0 ; 
@@ -93,7 +93,7 @@ void editorMoveCursor(const int key){
       
       case 'j' :
       case DOWN : 
-        E.cy <= E.numrows() + E.screenrows  ? ++E.cy : E.cy = E.numrows() + E.screenrows ; 
+        E.cy < E.numrows() + E.screenrows  ? ++E.cy : E.cy = E.numrows() + E.screenrows ; 
         break ; 
       
       case 'k' : 

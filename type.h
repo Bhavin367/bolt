@@ -19,6 +19,7 @@ typedef struct editorConfig {
   int rowoff ; 
   int coloff ; 
   std::string filename ;
+  std::string statusMessage ; // info line below file type and cur pos   
 } editorConfig ; 
 
 
