@@ -68,6 +68,7 @@ void drawStatusBar(std::string& ab){
   };
 
   ab.append("\x1b[m");
+  ab.append("\r\n");
 };
 
 void refreshScreen(){
