@@ -1,10 +1,10 @@
 
-# Render
+# Utility
 
-## setMessage 
+## setStatusMessage 
 
                 template <typename... Args> // 0 or multiple arguments of different type  
-                void setMessage(std::format_string<Args...> msg, Args&&...args ){ 
+                void setStatusMessage(std::format_string<Args...> msg, Args&&...args ){ 
                   E.statusMessage = std::format(msg,std::forward<Args>(args)...);
                 };
 

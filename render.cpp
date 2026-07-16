@@ -71,6 +71,14 @@ void drawStatusBar(std::string& ab){
   ab.append("\r\n");
 };
 
+void drawMessageBar(std::string &ab){
+  ab.append("\x1b[K");
+  int len = static_cast<int>(E.statusMessage.length());  // why not just (int), cause I CAN 
+
+  if( len > E.screencols ) len = E.screencols ; 
+  ab.append(E.statusMessage.c_str(), len); // c_str() is a pointer to that variable so we dont have to make unnessary copies 
+};
+
 void refreshScreen(){
   E.rowNumSize = numWidth(E.numrows()) + 2 ;
   handleScroll(); 
@@ -80,7 +88,7 @@ void refreshScreen(){
   appendBuff.append("\x1b[H"); 
   drawRows(appendBuff);
   drawStatusBar(appendBuff);
-  
+  drawMessageBar(appendBuff); 
   // cursor positioning
   
   appendBuff.append(std::format("\x1b[{};{}H",(E.cy - E.rowoff) + 1 , ( E.cx - E.coloff ) + E.rowNumSize + 2 ));

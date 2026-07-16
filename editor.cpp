@@ -12,10 +12,12 @@ void initEditor(){
   E.rowoff = 0 ; 
   E.coloff = 0 ; 
   E.screenrows -= 2 ; // this one's for status barrrr 
-  
   // E.filename stays null unless added by file part 
-
+  
+  setStatusMessage(">Got a cup of Coffee ? ");
+   
   write(STDOUT_FILENO,"\x1b[2 q",5);// i need that block intially , we can change when user switch to read/write  
+
 };
 // \x1b[6 q gives that normal line, make it 5 for blinking  
 

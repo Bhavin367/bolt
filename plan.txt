@@ -1,5 +1,0 @@
-Add editor status message, to show other stuff like saved deleted methods and all  
-
-Im thinking of skipping timestamp based approach from kilo and more like vim and neovim 
-
-
