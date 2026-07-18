@@ -1,4 +1,5 @@
 #include "render.h"
+#include "type.h"
 
 void handleScroll(){
 
@@ -79,6 +80,24 @@ void drawMessageBar(std::string &ab){
   ab.append(E.statusMessage.c_str(), len); // c_str() is a pointer to that variable so we dont have to make unnessary copies 
 };
 
+// to decide stuff like cursor state depending on editor mode
+void renderStyle(std::string &ab){
+  static editorModes last = static_cast<editorModes>(-1); // -1 is an unlikely no
+  
+  if (last == E.editorMode ){ 
+    return ;
+  } else {
+    last = E.editorMode ;
+  }; 
+
+  if (E.editorMode == INSERT){
+    ab.append("\x1b[5 q");
+  } 
+  else if ( E.editorMode == EDITOR){
+    ab.append("\x1b[2 q");
+  };
+};
+
 void refreshScreen(){
   E.rowNumSize = numWidth(E.numrows()) + 2 ;
   handleScroll(); 
@@ -89,6 +108,8 @@ void refreshScreen(){
   drawRows(appendBuff);
   drawStatusBar(appendBuff);
   drawMessageBar(appendBuff); 
+  renderStyle(appendBuff); 
+
   // cursor positioning
   
   appendBuff.append(std::format("\x1b[{};{}H",(E.cy - E.rowoff) + 1 , ( E.cx - E.coloff ) + E.rowNumSize + 2 ));

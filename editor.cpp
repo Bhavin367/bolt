@@ -182,9 +182,21 @@ void editorProcessKey(){
       case ctrl('l'):
         editorMoveCursor(c) ; 
         break ; 
+      
+      case 'i' :
+        E.editorMode =  INSERT ;
+        setStatusMessage(" --INSERT-- ");
+        break;
     }
+  } 
+  else if (E.editorMode == INSERT ){
+    switch (c) {
+      case '\x1b':
+        E.editorMode = EDITOR ; 
+        setStatusMessage("");
+        break; 
+    };
   };
-
 };
 
 

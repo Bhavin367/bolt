@@ -6,6 +6,7 @@
 - File reading 
 - Editor status bar - keeps track of total lines and cursor pos
 - Editor message bar 
+- Added enum class for editor modes with partial implementation 
 
 ### Next Stuff 
 
@@ -18,5 +19,5 @@
 - Proper implementation of modes , Editor , insert visual .
 - File tree or side bar or whatever you call that 
 
-- Add enum class for editor modes instead of char 
+- need work on rest of editor modes ( with text editing )
 - need a function processCommands ( for stuff like :wq :q ) 

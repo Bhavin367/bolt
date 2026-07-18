@@ -13,4 +13,6 @@ void drawStatusBar(std::string &ab);
 
 void drawMessageBar(std::string &ab);
 
+void renderStyle(std::string &ab);
+
 void refreshScreen();
