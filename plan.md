@@ -16,3 +16,7 @@
 - fix vim motion acc to render rows 
 - syntax highlighting
 - Proper implementation of modes , Editor , insert visual .
+- File tree or side bar or whatever you call that 
+
+- Add enum class for editor modes instead of char 
+- need a function processCommands ( for stuff like :wq :q ) 

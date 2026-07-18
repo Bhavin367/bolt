@@ -2,6 +2,13 @@
 #include <string>
 #include <vector>
 
+enum editorModes {
+EDITOR = 1050 ,
+INSERT ,
+COMMAND , 
+VISUAL ,
+};
+ 
 struct erow {
   std::string chars ; 
   size_t size() const{ return chars.size(); } ; 
@@ -13,7 +20,7 @@ typedef struct editorConfig {
   int screenrows ; 
   int screencols ; 
   int rowNumSize ; // for better spacing and stuff   
-  char editorMode ; // similar to nvim  
+  editorModes editorMode ; // similar to nvim  
   std::vector<erow> rows ; 
   int numrows() const { return rows.size() ; }; // it updates itself then , hopefully  
   int rowoff ; 
@@ -35,4 +42,5 @@ enum editorKey {
   HOME , 
   END ,
 };
+
 

@@ -1,4 +1,5 @@
 #include "editor.h"
+#include "type.h"
 #include "utils.h"
 
 editorConfig E ;
@@ -8,7 +9,7 @@ void initEditor(){
   E.rowNumSize = numWidth(E.numrows()) + 2 ;
   E.cx = 0; 
   E.cy = 0 ; 
-  E.editorMode = 'e'; 
+  E.editorMode = EDITOR; 
   E.rowoff = 0 ; 
   E.coloff = 0 ; 
   E.screenrows -= 2 ; // this one's for status barrrr 
@@ -153,7 +154,7 @@ void editorMoveCursor(const int key){
 void editorProcessKey(){
   int c = editorReadKey();
 
-  if (E.editorMode == 'e'){
+  if (E.editorMode == EDITOR){
     switch (c) {
       case ctrl('q'):
         write(STDOUT_FILENO,"\x1b[2J",4); 
