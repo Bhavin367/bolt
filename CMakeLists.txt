@@ -7,4 +7,4 @@ project(Bolt
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(bolt bolt.cpp terminal.cpp render.cpp editor.cpp utils.cpp file.cpp)
+add_executable(bolt bolt.cpp terminal.cpp render.cpp editor.cpp utils.cpp file.cpp commands.cpp)

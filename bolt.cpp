@@ -1,6 +1,8 @@
 #include "editor.h"
 #include "render.h"
 #include "file.h"
+#include <iostream>
+#include "type.h"
 
 int main (int argc , char* argv[]) {
   enableRawMode();
@@ -16,6 +18,6 @@ int main (int argc , char* argv[]) {
     refreshScreen();
     editorProcessKey() ;  
   };
- 
+
   return EXIT_SUCCESS;
 };

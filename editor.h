@@ -6,7 +6,7 @@
 #include "terminal.h"
 #include "type.h"
 #include <format>
-
+#include "commands.h"
 
 void getWinSize();
 

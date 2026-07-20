@@ -37,7 +37,7 @@ int editorReadKey(){
   char c ; 
 
   while ((nread = read(STDIN_FILENO, &c,1 )) != 1){
-    if (nread == 1 && errno != EAGAIN) die("Editor read key "); 
+    if (nread == -1 && errno != EAGAIN) die("Editor read key "); 
   };
 
   if ( c == '\x1b'){ // checking if its an arrow key  
@@ -187,6 +187,12 @@ void editorProcessKey(){
         E.editorMode =  INSERT ;
         setStatusMessage(" --INSERT-- ");
         break;
+    
+      case ':' : 
+        E.editorMode = COMMAND ; 
+        setStatusMessage(":"); 
+        initCommandMode(); 
+        break; 
     }
   } 
   else if (E.editorMode == INSERT ){

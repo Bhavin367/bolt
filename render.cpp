@@ -90,12 +90,13 @@ void renderStyle(std::string &ab){
     last = E.editorMode ;
   }; 
 
-  if (E.editorMode == INSERT){
+  if (E.editorMode == INSERT || E.editorMode == COMMAND){
     ab.append("\x1b[5 q");
   } 
-  else if ( E.editorMode == EDITOR){
+  else if ( E.editorMode == EDITOR ){
     ab.append("\x1b[2 q");
   };
+
 };
 
 void refreshScreen(){
@@ -111,9 +112,10 @@ void refreshScreen(){
   renderStyle(appendBuff); 
 
   // cursor positioning
+  if (E.editorMode != COMMAND) appendBuff.append(std::format("\x1b[{};{}H",(E.cy - E.rowoff) + 1 , ( E.cx - E.coloff ) + E.rowNumSize + 2 ));
   
-  appendBuff.append(std::format("\x1b[{};{}H",(E.cy - E.rowoff) + 1 , ( E.cx - E.coloff ) + E.rowNumSize + 2 ));
-  
+  if (E.editorMode == COMMAND ) appendBuff.append(std::format("\x1b[{}:{}H",E.screenrows + 2 , (int)E.statusMessage.length() + 1));
+   
   appendBuff.append("\x1b[?25h"); // show cursor 
   write(STDOUT_FILENO, appendBuff.c_str(),appendBuff.size());
 };
