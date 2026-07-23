@@ -1,6 +1,5 @@
 #include "editor.h"
-#include "type.h"
-#include "utils.h"
+#include "commands.h"
 
 editorConfig E ;
 
@@ -14,7 +13,7 @@ void initEditor(){
   E.coloff = 0 ; 
   E.screenrows -= 2 ; // this one's for status barrrr 
   // E.filename stays null unless added by file part 
-  
+
   setStatusMessage(">Got a cup of Coffee ? ");
    
   write(STDOUT_FILENO,"\x1b[2 q",5);// i need that block intially , we can change when user switch to read/write  
@@ -189,8 +188,6 @@ void editorProcessKey(){
         break;
     
       case ':' : 
-        E.editorMode = COMMAND ; 
-        setStatusMessage(":"); 
         initCommandMode(); 
         break; 
     }
@@ -202,6 +199,9 @@ void editorProcessKey(){
         setStatusMessage("");
         break; 
     };
+  } 
+  else if (E.editorMode == COMMAND ){
+    processCommand(readCommand());
   };
 };
 

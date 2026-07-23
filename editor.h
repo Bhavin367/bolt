@@ -7,6 +7,8 @@
 #include "type.h"
 #include <format>
 #include "commands.h"
+#include "utils.h"
+
 
 void getWinSize();
 

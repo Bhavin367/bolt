@@ -5,6 +5,12 @@
 #include <string>
 #include "type.h"
 
+int readCommand(); 
+
+void executeCommand(const std::string &command);
+
+void processCommand(int c);
+
 void initCommandMode();
 
-std::string readCommand();
+

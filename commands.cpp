@@ -1,30 +1,44 @@
 #include "commands.h"
 #include "utils.h"
 
+int readCommand(){
+  int nread ; 
+  char c ; 
+
+  while ((nread = read(STDIN_FILENO,&c,1)) != 1 ){
+    if (nread == -1 ) die("Read Command func failed ");
+  };
+
+  return c ; 
+};
+
+void executeCommand(const std::string &command){
+  if ( command.empty()) {
+    setStatusMessage("");
+  }; 
+
+};
+
+void processCommand(int c ){
+  if (c == '\n'){
+    E.cx = E.lastCx ; 
+    E.cy = E.lastCy ; 
+    E.editorMode = EDITOR ; 
+    E.statusMessage = "" ;
+    executeCommand(E.commandBuffer); 
+    E.commandBuffer.clear() ; 
+  } else {
+    E.commandBuffer += (char)c ;
+  };
+};
+
 // for cur pos, bg idk whatever i feel like  
 void initCommandMode(){  
-  std::string command  = readCommand(); 
+  E.editorMode = COMMAND ;  
+  E.lastCx = E.cx ; 
+  E.lastCy = E.cy ; 
+  E.commandBuffer.clear() ;
+  E.statusMessage = ":" ;
+}; 
 
-  if (command == "q"){
-    write(STDOUT_FILENO,"\x1b[2J",4); 
-    write(STDOUT_FILENO,"\x1b[H",3); 
-    std::exit(EXIT_SUCCESS) ;
-  };
-};
 
-std::string readCommand(){
-  std::string buffer ;
-  char c ;
-  
-  while(true){
-    int nread = static_cast<int>(read(STDIN_FILENO,&c,1)) ;
-    if ( nread == -1 && errno != EAGAIN ) {
-      die("Command read failed !! ");
-    };  
-  
-    if (c == '\n' || nread == 0 ) break ; // nread == 0 => EOF 
-    buffer.push_back(c);
-  };
-
-  return buffer ; 
-};

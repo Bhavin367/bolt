@@ -20,4 +20,10 @@
 - File tree or side bar or whatever you call that 
 
 - need work on rest of editor modes ( with text editing )
-- need a function processCommands ( for stuff like :wq :q ) 
+- rewrite command.cpp and use main loop to execute it something like E.mode == command , processCommand() in  editorprocess key 
+
+
+#### Jargon 
+
+work on execute command function and maybe to add future support for multiple arguments im not removing all spaces 
+but i gotta trim trailing white spaces and for now lets just add :q and work on rest after properly workign on text editing a bit more and file saving  

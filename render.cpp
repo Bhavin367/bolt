@@ -114,7 +114,7 @@ void refreshScreen(){
   // cursor positioning
   if (E.editorMode != COMMAND) appendBuff.append(std::format("\x1b[{};{}H",(E.cy - E.rowoff) + 1 , ( E.cx - E.coloff ) + E.rowNumSize + 2 ));
   
-  if (E.editorMode == COMMAND ) appendBuff.append(std::format("\x1b[{}:{}H",E.screenrows + 2 , (int)E.statusMessage.length() + 1));
+  if (E.editorMode == COMMAND ) appendBuff.append(std::format("\x1b[{};{}H",E.screenrows + 2 , (int)E.statusMessage.length() + 1));
    
   appendBuff.append("\x1b[?25h"); // show cursor 
   write(STDOUT_FILENO, appendBuff.c_str(),appendBuff.size());
