@@ -20,10 +20,9 @@
 - File tree or side bar or whatever you call that 
 
 - need work on rest of editor modes ( with text editing )
-- rewrite command.cpp and use main loop to execute it something like E.mode == command , processCommand() in  editorprocess key 
-
+- add support for multiple arguments in command 
 
 #### Jargon 
 
-work on execute command function and maybe to add future support for multiple arguments im not removing all spaces 
-but i gotta trim trailing white spaces and for now lets just add :q and work on rest after properly workign on text editing a bit more and file saving  
+new approach for commands instead of having seperate read for commands ill just use default reading of 
+editor and pass that to process commands 

@@ -1,34 +1,36 @@
 #include "commands.h"
-#include "utils.h"
 
-int readCommand(){
-  int nread ; 
-  char c ; 
-
-  while ((nread = read(STDIN_FILENO,&c,1)) != 1 ){
-    if (nread == -1 ) die("Read Command func failed ");
-  };
-
-  return c ; 
+void resetCommandMode(){
+  E.cx = E.lastCx ; 
+  E.cy = E.lastCy ; 
+  E.editorMode = EDITOR ; 
+  E.statusMessage = " " ; 
+  E.commandBuffer.clear() ; 
 };
 
-void executeCommand(const std::string &command){
+void executeCommand(std::string &command){
   if ( command.empty()) {
-    setStatusMessage("");
+    setStatusMessage("No commands found !!! ");
+    return;  
   }; 
 
+  trim(command); 
+
+  if (command == "q") {
+    write(STDOUT_FILENO,"\x1b[2J",4);
+    write(STDOUT_FILENO,"\x1b[H",3);
+    std::exit(EXIT_SUCCESS);
+    return ;  
+  };
 };
 
 void processCommand(int c ){
-  if (c == '\n'){
-    E.cx = E.lastCx ; 
-    E.cy = E.lastCy ; 
-    E.editorMode = EDITOR ; 
-    E.statusMessage = "" ;
+  if (c == '\n' || c == '\r' ){
     executeCommand(E.commandBuffer); 
-    E.commandBuffer.clear() ; 
+    resetCommandMode() ;  
   } else {
     E.commandBuffer += (char)c ;
+    E.statusMessage = ":" + E.commandBuffer ;  
   };
 };
 

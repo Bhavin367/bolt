@@ -201,7 +201,7 @@ void editorProcessKey(){
     };
   } 
   else if (E.editorMode == COMMAND ){
-    processCommand(readCommand());
+    processCommand(c);
   };
 };
 

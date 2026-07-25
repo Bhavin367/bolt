@@ -21,4 +21,10 @@ void setStatusMessage(std::format_string<Args...> msg , Args&&... args){
 // explained at Docs/utility.md 
 // way too much stuff to just add comments 
 
+static inline bool is_not_space(char c );
 
+void ltrim(std::string& s);
+
+void rtrim(std::string& s);
+
+void trim(std::string& s);

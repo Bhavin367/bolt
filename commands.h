@@ -5,7 +5,7 @@
 #include <string>
 #include "type.h"
 
-int readCommand(); 
+void resetCommandMode();
 
 void executeCommand(const std::string &command);
 
