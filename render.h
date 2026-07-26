@@ -7,6 +7,8 @@
 
 void handleScroll();
 
+void updateRow(erow& row);
+
 void drawRows(std::string &ab);
 
 void drawStatusBar(std::string &ab);

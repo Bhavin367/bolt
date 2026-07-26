@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 
+constexpr int TAB_STOP = 8 ; 
+
 enum editorModes {
 EDITOR = 1050 ,
 INSERT ,
@@ -11,7 +13,7 @@ VISUAL ,
  
 struct erow {
   std::string chars ; 
-  size_t size() const{ return chars.size(); } ; 
+  size_t size() const{ return render.size(); } ; 
   std::string render ;
 };
 

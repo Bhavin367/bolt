@@ -28,7 +28,8 @@ void processCommand(int c ){
   if (c == '\n' || c == '\r' ){
     executeCommand(E.commandBuffer); 
     resetCommandMode() ;  
-  } else {
+  } 
+  else {
     E.commandBuffer += (char)c ;
     E.statusMessage = ":" + E.commandBuffer ;  
   };

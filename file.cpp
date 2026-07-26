@@ -1,4 +1,6 @@
 #include "file.h"
+#include "render.h"
+#include <utility>
 
 void openFile(const std::string& filename){
   std::ifstream fp(filename);
@@ -14,10 +16,9 @@ void openFile(const std::string& filename){
       line.pop_back();
     };
     // back() checks last charact , pop_back() removes it 
-   
     erow row ; 
-    row.chars = line ; 
+    row.chars = std::move(line); 
+    updateRow(row); 
     E.rows.push_back(std::move(row)) ;
-    
   };
 };

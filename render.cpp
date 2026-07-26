@@ -18,6 +18,25 @@ void handleScroll(){
   };
 };
 
+void updateRow(erow &row){
+  row.render.clear() ; 
+  int idx = 0 ;
+  
+  for (char c : row.chars){
+    if (c == '\t'){
+      row.render.push_back(' '); // making sure theres ateast one space 
+      ++idx; 
+      while(idx % TAB_STOP != 0 ){
+        row.render.push_back(' '); 
+        ++idx ;  
+      }; 
+    }else {
+      row.render.push_back(c);
+      ++idx; 
+    }; 
+  };
+};
+
 void drawRows(std::string &ab){
   int y ; 
 
@@ -38,7 +57,7 @@ void drawRows(std::string &ab){
       len = len <= 0 ? 0 : len ; 
       if ( len > E.screencols - 2) len = E.screencols - 2 ;
       ab.append(" ") ; 
-      if (len > 0 ) ab.append(E.rows[filerow].chars,E.coloff,len);
+      if (len > 0 ) ab.append(E.rows[filerow].render,E.coloff,len);
     }
       ab += "\r\n"; 
   };

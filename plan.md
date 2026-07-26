@@ -7,6 +7,7 @@
 - Editor status bar - keeps track of total lines and cursor pos
 - Editor message bar 
 - Added enum class for editor modes with partial implementation 
+- Added render rows for handling special cases like tabs Ctrl what not and also syntax highlighting 
 
 ### Next Stuff 
 
