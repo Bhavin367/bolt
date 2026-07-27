@@ -8,6 +8,7 @@
 - Editor message bar 
 - Added enum class for editor modes with partial implementation 
 - Added render rows for handling special cases like tabs Ctrl what not and also syntax highlighting 
+- Now motions to right is cutt off based on rendered charactors instead of being infinitely right 
 
 ### Next Stuff 
 
@@ -15,7 +16,6 @@
 
 - next we need proper text editing like insertion deleting, so expland on render part of erow
 - more vim and custom motions ( next word, delete word, change word ) 
-- fix vim motion acc to render rows 
 - syntax highlighting
 - Proper implementation of modes , Editor , insert visual .
 - File tree or side bar or whatever you call that 

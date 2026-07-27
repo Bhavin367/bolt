@@ -87,6 +87,8 @@ int editorReadKey(){
 
 
 void editorMoveCursor(const int key){
+    erow* row = (E.cy < E.numrows()) ? &E.rows[E.cy] : nullptr ;  
+
     switch (key) {
       case 'h' :
       case LEFT :  
@@ -105,7 +107,7 @@ void editorMoveCursor(const int key){
 
       case 'l' : 
       case RIGHT :  
-        E.cx ++ ; 
+        if (row && E.cx < row->size() )E.cx ++ ;  
         break ; 
 
       case '0' : 
@@ -147,6 +149,9 @@ void editorMoveCursor(const int key){
         break ; 
     }
 
+    row = (E.cy > E.numrows()) ? nullptr : &E.rows[E.cy] ; 
+    int rowLen = row ? row->size()   : 0 ; 
+    if (E.cx > rowLen ) E.cx = rowLen ; 
 };
 
 
