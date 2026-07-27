@@ -1,4 +1,5 @@
 #include "commands.h"
+#include "utils.h"
 
 void resetCommandMode(){
   E.cx = E.lastCx ; 
@@ -29,6 +30,14 @@ void processCommand(int c ){
     executeCommand(E.commandBuffer); 
     resetCommandMode() ;  
   } 
+  else if ( c == '\b' || c == 127 || c == ctrl('h')){
+    if (!E.commandBuffer.empty()) {
+      E.commandBuffer.pop_back() ; 
+      E.statusMessage = ":" + E.commandBuffer ; 
+    } else {
+      resetCommandMode() ;  
+    }; 
+  }  
   else {
     E.commandBuffer += (char)c ;
     E.statusMessage = ":" + E.commandBuffer ;  
