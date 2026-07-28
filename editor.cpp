@@ -1,5 +1,6 @@
 #include "editor.h"
-#include "commands.h"
+#include "render.h"
+#include <cstddef>
 
 editorConfig E ;
 
@@ -97,7 +98,7 @@ void editorMoveCursor(const int key){
       
       case 'j' :
       case DOWN : 
-        E.cy < E.numrows() + E.screenrows  ? ++E.cy : E.cy = E.numrows() + E.screenrows ; 
+        E.cy < E.numrows() ? ++E.cy : E.cy = E.numrows() ; 
         break ; 
       
       case 'k' : 
@@ -119,7 +120,7 @@ void editorMoveCursor(const int key){
       case '$' : 
       case END :
       case ctrl('l'): 
-        E.cx = E.screencols ; 
+        if (row) E.cx = row->size() ; 
         break ; 
    
       case PAGE_UP : 
@@ -136,20 +137,20 @@ void editorMoveCursor(const int key){
       case PAGE_DOWN : 
       case ctrl('j'):
         if ( ( !E.numrows() || E.numrows() == 0 ) ){
-          E.cy = E.screenrows - 1 ;
+          E.cy = 1 ;
           break ; 
         }; 
 
-        if (E.cy + E.screenrows < E.numrows()){
-          E.cy += E.screenrows - 1;
+        if (E.cy + E.screenrows  < E.numrows()){
+          E.cy += E.screenrows;
         } else {
-          E.cy = E.numrows() - 1 ; 
+          E.cy = E.numrows() ; 
         };
 
         break ; 
     }
 
-    row = (E.cy > E.numrows()) ? nullptr : &E.rows[E.cy] ; 
+    row = (E.cy >= E.numrows()) ? nullptr : &E.rows[E.cy] ; 
     int rowLen = row ? row->size()   : 0 ; 
     if (E.cx > rowLen ) E.cx = rowLen ; 
 };
@@ -210,4 +211,14 @@ void editorProcessKey(){
   };
 };
 
+void editorRowInsertChar(erow &row, size_t at, int c){
+  if (at > row.chars.size() ) at = row.chars.size() ;
 
+  row.chars.insert(at,1,(char)c); // insert(postion, no of copies , char )
+  
+  updateRow(row);
+};
+
+
+void editorInsertChar(int c){
+};

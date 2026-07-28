@@ -25,5 +25,4 @@
 
 #### Jargon 
 
-new approach for commands instead of having seperate read for commands ill just use default reading of 
-editor and pass that to process commands 
+horizontal scalling breaks completely with files with larger lines ( < 500)

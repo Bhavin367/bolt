@@ -8,7 +8,7 @@
 #include <format>
 #include "commands.h"
 #include "utils.h"
-
+#include "render.h"
 
 void getWinSize();
 
@@ -19,3 +19,7 @@ void editorMoveCursor(const int key); // technically char is an int and custom k
 int editorReadKey();
 
 void editorProcessKey();
+
+void editorRowInsertChar(erow& row , int at , int c );
+
+void editorInsertChar(int c) ; 
