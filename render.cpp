@@ -55,7 +55,7 @@ void drawRows(std::string &ab){
     if ( E.numrows() &&  filerow < E.numrows()){
       int len = (int)E.rows[filerow].size() - E.coloff ; // apparently this guy was giving size_t we need INT  
       len = len <= 0 ? 0 : len ; 
-      if ( len > E.screencols - 2) len = E.screencols - 2 ;
+      if ( len > E.screencols - 2) len = E.screencols - E.rowNumSize - 2 ;
       ab.append(" ") ; 
       if (len > 0 ) ab.append(E.rows[filerow].render,E.coloff,len);
     }

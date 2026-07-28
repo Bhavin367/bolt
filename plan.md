@@ -25,4 +25,4 @@
 
 #### Jargon 
 
-horizontal scalling breaks completely with files with larger lines ( < 500)
+ ( fixed ) horizontal scalling breaks completely with files with larger lines ( < 500)
