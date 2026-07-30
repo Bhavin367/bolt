@@ -5,3 +5,7 @@
 #include "type.h"
 
 void openFile(const std::string& filename);
+
+std::string rowsToString() ;
+
+void saveFile() ; 

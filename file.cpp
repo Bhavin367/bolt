@@ -1,5 +1,12 @@
 #include "file.h"
 #include "render.h"
+#include "utils.h"
+#include <cerrno>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <fstream>
+#include <string>
 #include <utility>
 
 void openFile(const std::string& filename){
@@ -21,4 +28,38 @@ void openFile(const std::string& filename){
     updateRow(row); 
     E.rows.push_back(std::move(row)) ;
   };
+};
+
+std::string rowsToString(){
+  std::string buf ;  
+  for (const auto& row : E.rows ) {
+    buf.append(row.chars) ; 
+    buf.append("\n") ; 
+  };
+  return  buf ;
+};
+
+void saveFile(){
+  if ( E.filename.empty() ) return ; 
+
+  std::ofstream file(E.filename,std::ios::binary) ; // binary mode better  
+ 
+  if (!file) {
+  setStatusMessage(" Can't save ! I/O error : {}" , std::string(strerror(errno))); 
+  die("File operations failed : saveFile() ") ;  
+  return ; 
+  } ;  
+  std::string data = rowsToString(); 
+
+  file.write(data.data(),data.size()) ; 
+
+  if (!file) {
+    setStatusMessage(" Can't save ! write failed !! "); 
+    die("File operations failed : saveFile() .. write ") ; 
+    return ; 
+  };
+
+  file.close() ; 
+  setStatusMessage("\"{}\" {}B written", E.filename, data.size()); 
+
 };

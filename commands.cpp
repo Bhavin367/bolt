@@ -1,4 +1,5 @@
 #include "commands.h"
+#include "file.h"
 #include "type.h"
 #include "utils.h"
 
@@ -6,7 +7,6 @@ void resetCommandMode(){
   E.cx = E.lastCx ; 
   E.cy = E.lastCy ; 
   E.editorMode = EDITOR ; 
-  E.statusMessage = " " ; 
   E.commandBuffer.clear() ; 
 };
 
@@ -19,11 +19,18 @@ void executeCommand(std::string &command){
   trim(command); 
 
   if (command == "q") {
-    write(STDOUT_FILENO,"\x1b[2J",4);
-    write(STDOUT_FILENO,"\x1b[H",3);
-    std::exit(EXIT_SUCCESS);
+    close() ; 
     return ;  
-  };
+  }
+  else if (command == "w") {
+    saveFile(); 
+    return ; 
+  }
+  else if (command == "wq"){
+    saveFile() ; 
+    close() ; 
+    return ; 
+  } ; 
 };
 
 void processCommand(int c ){

@@ -24,4 +24,5 @@ void editorAppendRow(const std::string& s ) ;
 
 void editorRowInsertChar(erow& row , int at , int c );
 
-void editorInsertChar(int c) ; 
+void editorInsertChar(int c) ;
+

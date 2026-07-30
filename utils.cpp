@@ -9,6 +9,12 @@ void die(const char* err){
   EXIT_FAILURE;
 };
 
+void close(){
+    write(STDOUT_FILENO,"\x1b[2J",4);
+    write(STDOUT_FILENO,"\x1b[H",3);
+    std::exit(EXIT_SUCCESS);
+    return ;
+} ;
 
 int numWidth(int rowNo){
   int count = 1 ;

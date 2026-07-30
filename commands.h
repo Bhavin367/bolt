@@ -4,6 +4,7 @@
 #include "utils.h"
 #include <string>
 #include "type.h"
+#include "file.h"
 
 void resetCommandMode();
 
