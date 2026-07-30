@@ -1,5 +1,7 @@
 #include "editor.h"
 #include "render.h"
+#include "type.h"
+#include "utils.h"
 #include <cstddef>
 
 editorConfig E ;
@@ -137,7 +139,7 @@ void editorMoveCursor(const int key){
       case PAGE_DOWN : 
       case ctrl('j'):
         if ( ( !E.numrows() || E.numrows() == 0 ) ){
-          E.cy = 1 ;
+          E.cy = 0 ;
           break ; 
         }; 
 
@@ -203,7 +205,17 @@ void editorProcessKey(){
       case '\x1b':
         E.editorMode = EDITOR ; 
         setStatusMessage("");
-        break; 
+        break;
+
+      case BACKSPACE : 
+      case ctrl('h') : 
+      case DEL_KEY   : 
+        
+        break ;
+       
+      default: 
+        editorInsertChar(c) ; 
+        break ; 
     };
   } 
   else if (E.editorMode == COMMAND ){
@@ -211,14 +223,28 @@ void editorProcessKey(){
   };
 };
 
-void editorRowInsertChar(erow &row, size_t at, int c){
-  if (at > row.chars.size() ) at = row.chars.size() ;
+// need this to create a new row to Rows whenever user goes to last unused line 
+void editorAppendRow(const std::string &s){
+  erow row  ;
+  row.chars = s ; 
+  E.rows.push_back(std::move(row)) ; 
+  updateRow(E.rows.back()) ; 
+};
+
+void editorRowInsertChar(erow &row, int at, int c){
+  if (at < 0 || at > static_cast<int>( row.chars.size()) ) at = static_cast<int>(row.chars.size());
 
   row.chars.insert(at,1,(char)c); // insert(postion, no of copies , char )
   
-  updateRow(row);
+  updateRow(row); 
 };
 
 
 void editorInsertChar(int c){
+  if (E.cy == E.numrows() ){
+    editorAppendRow("") ;
+  }  
+
+  editorRowInsertChar(E.rows[E.cy],E.cx ,c) ;
+  E.cx++;
 };

@@ -14,6 +14,7 @@
 
 (Order doesnt make sense now im just writing down all jargon)
 
+- Add file saving 
 - next we need proper text editing like insertion deleting, so expland on render part of erow
 - more vim and custom motions ( next word, delete word, change word ) 
 - syntax highlighting
@@ -25,4 +26,4 @@
 
 #### Jargon 
 
- ( fixed ) horizontal scalling breaks completely with files with larger lines ( < 500)
+so right now we kind off have text edition but needs to handle special cases like backspace and newline  

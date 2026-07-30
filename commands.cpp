@@ -1,4 +1,5 @@
 #include "commands.h"
+#include "type.h"
 #include "utils.h"
 
 void resetCommandMode(){
@@ -30,7 +31,7 @@ void processCommand(int c ){
     executeCommand(E.commandBuffer); 
     resetCommandMode() ;  
   } 
-  else if ( c == '\b' || c == 127 || c == ctrl('h')){
+  else if ( c == '\b' || c == BACKSPACE || c == ctrl('h')){
     if (!E.commandBuffer.empty()) {
       E.commandBuffer.pop_back() ; 
       E.statusMessage = ":" + E.commandBuffer ; 

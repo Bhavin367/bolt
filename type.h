@@ -37,6 +37,7 @@ typedef struct editorConfig {
 extern editorConfig E ;
 
 enum editorKey {
+  BACKSPACE = 127 ,  
   UP = 1000 , // shouldnt intefere with other ascii values hence such no 
   DOWN ,
   LEFT ,
@@ -45,6 +46,7 @@ enum editorKey {
   PAGE_DOWN, 
   HOME , 
   END ,
+  DEL_KEY ,
 };
 
 
