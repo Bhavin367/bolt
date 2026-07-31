@@ -1,8 +1,9 @@
 #include "editor.h"
+#include "file.h"
 #include "render.h"
 #include "type.h"
 #include "utils.h"
-#include <cstddef>
+#include <sys/ioctl.h>
 
 editorConfig E ;
 
@@ -14,6 +15,7 @@ void initEditor(){
   E.editorMode = EDITOR; 
   E.rowoff = 0 ; 
   E.coloff = 0 ; 
+  E.dirty =  0 ;  
   E.screenrows -= 2 ; // this one's for status barrrr 
   // E.filename stays null unless added by file part 
 
@@ -212,7 +214,11 @@ void editorProcessKey(){
       case DEL_KEY   : 
         
         break ;
-       
+     
+      case CTRL('s'):
+        saveFile(); 
+        break ; 
+      
       default: 
         editorInsertChar(c) ; 
         break ; 
@@ -229,6 +235,7 @@ void editorAppendRow(const std::string &s){
   row.chars = s ; 
   E.rows.push_back(std::move(row)) ; 
   updateRow(E.rows.back()) ; 
+  E.dirty++ ; 
 };
 
 void editorRowInsertChar(erow &row, int at, int c){
@@ -237,6 +244,7 @@ void editorRowInsertChar(erow &row, int at, int c){
   row.chars.insert(at,1,(char)c); // insert(postion, no of copies , char )
   
   updateRow(row); 
+  E.dirty++ ; 
 };
 
 

@@ -31,6 +31,7 @@ typedef struct editorConfig {
   std::string statusMessage ; // info line below file type and cur pos   
   int lastCx , lastCy ; // this ones for remembering where curosr was after execu commands  
   std::string commandBuffer ;
+  int dirty  ; 
 } editorConfig ; 
 
 

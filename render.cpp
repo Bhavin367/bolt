@@ -1,5 +1,7 @@
 #include "render.h"
 #include "type.h"
+#include <filesystem>
+#include <string>
 
 void handleScroll(){
 
@@ -67,9 +69,11 @@ void drawStatusBar(std::string& ab){
   ab.append("\x1b[7;40m");
   
   int len = 0 ; 
-  std::string fileName = E.filename.empty() ? "[No Name] - 0 lines " : E.filename + " - " + std::to_string(E.numrows()) + " lines";
-  std::string curPos = " " + std::to_string((int)E.cx) + "/" + std::to_string((int)E.cy) + " "; // i just want cursor position on right now, might add other stuff in future  
-  
+  std::string fileName = E.filename.empty() ? "[No Name]" : E.filename ; 
+  E.dirty ? fileName.append(" [+] ") : fileName.append("  -  ") ;  
+  fileName += E.filename.empty() ? "0 lines " : std::to_string((int)E.numrows()) + " lines"; 
+  std::string curPos = " " + std::to_string((int)E.cx) + "/" + std::to_string((int)E.cy) + " " ; // i just want cursor position on right now, might add other stuff in future  
+
   len = fileName.length() ;   
   if ( len > E.screencols ) {
     len = E.screencols ; 

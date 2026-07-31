@@ -28,6 +28,8 @@ void openFile(const std::string& filename){
     updateRow(row); 
     E.rows.push_back(std::move(row)) ;
   };
+
+  E.dirty = 0 ; // just in case ig
 };
 
 std::string rowsToString(){
@@ -40,7 +42,11 @@ std::string rowsToString(){
 };
 
 void saveFile(){
-  if ( E.filename.empty() ) return ; 
+  if ( E.filename.empty() ) {
+    setStatusMessage(" No file name !! ") ;  
+    E.dirty = 0 ;  
+    return ; 
+  }; 
 
   std::ofstream file(E.filename,std::ios::binary) ; // binary mode better  
  
@@ -61,5 +67,5 @@ void saveFile(){
 
   file.close() ; 
   setStatusMessage("\"{}\" {}B written", E.filename, data.size()); 
-
+  E.dirty = 0 ;
 };
