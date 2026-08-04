@@ -15,7 +15,7 @@ void initEditor(){
   E.editorMode = EDITOR; 
   E.rowoff = 0 ; 
   E.coloff = 0 ; 
-  E.dirty =  0 ;  
+  E.dirty =  false ;  
   E.screenrows -= 2 ; // this one's for status barrrr 
   // E.filename stays null unless added by file part 
 
@@ -235,7 +235,7 @@ void editorAppendRow(const std::string &s){
   row.chars = s ; 
   E.rows.push_back(std::move(row)) ; 
   updateRow(E.rows.back()) ; 
-  E.dirty++ ; 
+  E.dirty = true ; 
 };
 
 void editorRowInsertChar(erow &row, int at, int c){
@@ -244,7 +244,7 @@ void editorRowInsertChar(erow &row, int at, int c){
   row.chars.insert(at,1,(char)c); // insert(postion, no of copies , char )
   
   updateRow(row); 
-  E.dirty++ ; 
+  E.dirty = true ; 
 };
 
 

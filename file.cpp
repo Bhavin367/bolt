@@ -29,7 +29,7 @@ void openFile(const std::string& filename){
     E.rows.push_back(std::move(row)) ;
   };
 
-  E.dirty = 0 ; // just in case ig
+  E.dirty = false  ; // just in case ig
 };
 
 std::string rowsToString(){
@@ -44,7 +44,7 @@ std::string rowsToString(){
 void saveFile(){
   if ( E.filename.empty() ) {
     setStatusMessage(" No file name !! ") ;  
-    E.dirty = 0 ;  
+    E.dirty = false ;  
     return ; 
   }; 
 
@@ -67,5 +67,5 @@ void saveFile(){
 
   file.close() ; 
   setStatusMessage("\"{}\" {}B written", E.filename, data.size()); 
-  E.dirty = 0 ;
+  E.dirty = false ;
 };

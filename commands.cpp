@@ -2,6 +2,7 @@
 #include "file.h"
 #include "type.h"
 #include "utils.h"
+#include <cstdlib>
 
 void resetCommandMode(){
   E.cx = E.lastCx ; 
@@ -23,8 +24,8 @@ void executeCommand(std::string &command){
     return ;  
   }
   else if ( command == "q"){
-    if (E.dirty != 0 ) {
-      setStatusMessage("Unsaved changes detected !!! Use q! to force quit. ");
+    if (E.dirty ) {
+      setStatusMessage("Unsaved changes found in ''{}'' , use q! to force quit !! ", E.filename ); 
       return ; 
     }; 
     close(); 
