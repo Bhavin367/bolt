@@ -18,10 +18,18 @@ void executeCommand(std::string &command){
 
   trim(command); 
 
-  if (command == "q") {
+  if (command == "q!") {
     close() ; 
     return ;  
   }
+  else if ( command == "q"){
+    if (E.dirty != 0 ) {
+      setStatusMessage("Unsaved changes detected !!! Use q! to force quit. ");
+      return ; 
+    }; 
+    close(); 
+    return ; 
+  } 
   else if (command == "w") {
     saveFile(); 
     return ; 
