@@ -14,7 +14,6 @@
 
 (Order doesnt make sense now im just writing down all jargon)
 
-- Add file saving 
 - next we need proper text editing like insertion deleting, so expland on render part of erow
 - more vim and custom motions ( next word, delete word, change word ) 
 - syntax highlighting
@@ -25,5 +24,6 @@
 - add support for multiple arguments in command 
 
 #### Jargon 
-
-so right now we kind off have text edition but needs to handle special cases like backspace and newline  
+ 
+del operation sort off works but the bottlenect is dd for deleting whole row , termios only waits for fraction of a second for next input causing a second d to almost always miss 
+im thinking of a buffer for this sort of operation or increasign timelimit to 500ms to wait for second click , first options sounds nicer though 

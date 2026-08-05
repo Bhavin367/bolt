@@ -4,7 +4,6 @@
 #include "type.h"
 #include "utils.h"
 #include <sys/ioctl.h>
-#include <unistd.h>
 
 editorConfig E ;
 
@@ -201,11 +200,6 @@ void editorProcessKey(){
       case ':' : 
         initCommandMode(); 
         break; 
-   
-        // for some reason init char seq breaks without enclosing in {} 
-      case 'd' : 
-        editorDelCurrentRow(); 
-        break ;
     }
   } 
   else if (E.editorMode == INSERT ){
@@ -218,7 +212,7 @@ void editorProcessKey(){
       case BACKSPACE : 
       case ctrl('h') : 
       case DEL_KEY   : 
-        editorDelChar() ; 
+        
         break ;
      
       case CTRL('s'):
@@ -263,30 +257,11 @@ void editorInsertChar(int c){
   E.cx++;
 };
 
-// static cast is absolutely uncessary since numrows() already have guard rails
-// which i constantly forget and is too lazy to changee 
 void editorDelRow(int at ) {
-  if (at < 0 || at >= static_cast<int>(E.numrows()) ) return; 
+  if (at < 0 || at > static_cast<int>(E.numrows()) ) at = static_cast<int>(E.numrows()); 
 
   E.rows.erase(E.rows.begin() + at ) ; 
   E.dirty = true ; 
-};
-
-void editorDelCurrentRow(){
-  if (E.rows.empty()) return ; 
-
-  editorDelRow(E.cy) ; 
-
-  if (E.rows.empty()) {
-    editorAppendRow("") ; 
-    E.cy = 0 ; 
-  }else if (E.cy >= E.numrows() ){
-    E.cy = E.numrows() - 1 ; 
-  };
-  
-  int newLen = static_cast<int>(E.rows[E.cy].chars.size()) ; 
-  E.cx = std::min(E.cx , newLen ) ; 
-  
 };
 
 void editorRowDelChar(erow &row, int at){

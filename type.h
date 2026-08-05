@@ -24,7 +24,7 @@ typedef struct editorConfig {
   int rowNumSize ; // for better spacing and stuff   
   editorModes editorMode ; // similar to nvim  
   std::vector<erow> rows ; 
-  int numrows() const { return rows.size() ; }; // it updates itself then , hopefully  
+  int numrows() const { return static_cast<int>(rows.size()) ; }; // it updates itself then , hopefully  
   int rowoff ; 
   int coloff ; 
   std::string filename ;

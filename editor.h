@@ -26,3 +26,10 @@ void editorRowInsertChar(erow& row , int at , int c );
 
 void editorInsertChar(int c) ;
 
+void editorDelRow(int at );
+
+void editorDelCurrentRow() ;
+
+void editorRowDelChar(erow& row , int at ); // lower level function 
+
+void editorDelChar() ; // does all the checking and stuff  
