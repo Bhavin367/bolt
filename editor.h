@@ -20,7 +20,7 @@ int editorReadKey();
 
 void editorProcessKey();
 
-void editorAppendRow(const std::string& s ) ; 
+void editorInsertRow(const std::string& s , size_t at = E.numrows() ) ; 
 
 void editorRowInsertChar(erow& row , int at , int c );
 

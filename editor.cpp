@@ -4,6 +4,7 @@
 #include "type.h"
 #include "utils.h"
 #include <cerrno>
+#include <cstddef>
 #include <sys/ioctl.h>
 #include <unistd.h>
 
@@ -256,11 +257,11 @@ void editorProcessKey(){
 };
 
 // need this to create a new row to Rows whenever user goes to last unused line 
-void editorAppendRow(const std::string &s){
+void editorInsertRow(const std::string &s , size_t at) {
   erow row  ;
   row.chars = s ; 
-  E.rows.push_back(std::move(row)) ; 
-  updateRow(E.rows.back()) ; 
+  E.rows.insert(E.rows.begin() + at ,std::move(row)) ; 
+  updateRow(E.rows[at]) ; 
   E.dirty = true ; 
 };
 
@@ -276,7 +277,7 @@ void editorRowInsertChar(erow &row, int at, int c){
 
 void editorInsertChar(int c){
   if (E.cy == E.numrows() ){
-    editorAppendRow("") ;
+    editorInsertRow("") ;
   }  
 
   editorRowInsertChar(E.rows[E.cy],E.cx ,c) ;
@@ -298,7 +299,7 @@ void editorDelCurrentRow(){
   editorDelRow(E.cy) ; 
 
   if (E.rows.empty()) {
-    editorAppendRow("") ; 
+    editorInsertRow("") ; 
     E.cy = 0 ; 
   }else if (E.cy >= E.numrows() ){
     E.cy = E.numrows() - 1 ; 
