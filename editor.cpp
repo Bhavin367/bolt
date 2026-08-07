@@ -3,6 +3,7 @@
 #include "render.h"
 #include "type.h"
 #include "utils.h"
+#include <cerrno>
 #include <sys/ioctl.h>
 #include <unistd.h>
 
@@ -203,9 +204,28 @@ void editorProcessKey(){
         break; 
    
         // for some reason init char seq breaks without enclosing in {} 
-      case 'd' : 
-        editorDelCurrentRow(); 
-        break ;
+      case 'd' : {
+        char seq ; 
+        int nread ; 
+        while ((nread = read(STDIN_FILENO,&seq ,1 )) == 0 ||  nread == -1  ){
+          if (nread == -1 && errno != EAGAIN) die("Editor read command key [del]"); 
+        };
+      
+        switch (seq) {
+          case 'd' : 
+            editorDelCurrentRow() ;
+            break ; 
+          
+          // for later  
+          case 'w' : 
+            break ; 
+
+          default : 
+            break ; 
+        };
+      
+        break ; 
+      } 
     }
   } 
   else if (E.editorMode == INSERT ){
