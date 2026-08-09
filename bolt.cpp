@@ -4,6 +4,7 @@
 #include <iostream>
 #include "type.h"
 
+
 int main (int argc , char* argv[]) {
   enableRawMode();
   initEditor();
@@ -12,7 +13,7 @@ int main (int argc , char* argv[]) {
 
   if (argc >= 2 ) {
     openFile(argv[1]); // we looking something like bolt(argv[0]) something.txt(argv[1]) , pretty much like neovim
-  }
+  };
 
   while (1) {
     refreshScreen();

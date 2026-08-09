@@ -246,6 +246,11 @@ void editorProcessKey(){
         saveFile(); 
         break ; 
       
+      case '\r' :
+      case '\n' : 
+        editorInsertNewLine();
+        break ; 
+
       default: 
         editorInsertChar(c) ; 
         break ; 
@@ -262,6 +267,20 @@ void editorInsertRow(const std::string &s , size_t at) {
   row.chars = s ; 
   E.rows.insert(E.rows.begin() + at ,std::move(row)) ; 
   updateRow(E.rows[at]) ; 
+  E.dirty = true ; 
+};
+
+void editorInsertNewLine(){
+  if (E.cx == 0 ) {
+    editorInsertRow("",E.cy) ; 
+  } else {
+    erow& row  = E.rows[E.cy] ;  
+    editorInsertRow(row.chars.substr(E.cx),E.cy + 1) ; 
+    row.chars.erase(E.cx);
+    updateRow(row) ; 
+  };
+  E.cx = 0 ; 
+  E.cy ++ ; 
   E.dirty = true ; 
 };
 

@@ -26,6 +26,8 @@ void editorRowInsertChar(erow& row , int at , int c );
 
 void editorInsertChar(int c) ;
 
+void editorInsertNewLine();
+
 void editorDelRow(int at );
 
 void editorDelCurrentRow() ;
