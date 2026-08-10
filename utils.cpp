@@ -1,4 +1,6 @@
 #include "utils.h"
+#include "file.h"
+#include "type.h"
 #include <algorithm>
 
 void die(const char* err){
@@ -46,4 +48,18 @@ void rtrim(std::string &s){
 void trim(std::string &s){
   ltrim(s); 
   rtrim(s);
+};
+
+int rowCxToRx(erow &row, int cx){
+  int rx = 0 ; 
+  int j ; 
+
+  for ( j = 0 ; j < cx  ; ++j ){
+    if (row.chars[j] == '\t'){
+      rx += (TAB_STOP - 1) - (rx% TAB_STOP) ; 
+    };
+    rx++ ;
+  };
+
+  return rx ; 
 };

@@ -4,6 +4,11 @@
 #include <string>
 
 void handleScroll(){
+  E.rx = 0  ;
+
+  if (E.cy < E.numrows() ) {
+    E.rx = rowCxToRx(E.rows[E.cy],E.cx) ; 
+  };
 
   if (E.cy < E.rowoff ) E.rowoff = E.cy ;
 
@@ -11,14 +16,14 @@ void handleScroll(){
     E.rowoff = E.cy - E.screenrows + 1;
   };
 
-  if (E.cx < E.coloff ){
-    E.coloff = E.cx ;
+  if (E.rx < E.coloff ){
+    E.coloff = E.rx ;
   };  
   
   int textWidth = E.screencols - E.rowNumSize - 2 ; 
 
-  if (E.cx >= E.coloff + textWidth ) {
-    E.coloff = E.cx - textWidth + 1;
+  if (E.rx >= E.coloff + textWidth ) {
+    E.coloff = E.rx - textWidth + 1;
   };
 };
 
@@ -137,7 +142,7 @@ void refreshScreen(){
   renderStyle(appendBuff); 
 
   // cursor positioning
-  if (E.editorMode != COMMAND) appendBuff.append(std::format("\x1b[{};{}H",(E.cy - E.rowoff) + 1 , ( E.cx - E.coloff ) + E.rowNumSize + 2 ));
+  if (E.editorMode != COMMAND) appendBuff.append(std::format("\x1b[{};{}H",(E.cy - E.rowoff) + 1 , ( E.rx - E.coloff ) + E.rowNumSize + 2 ));
   
   if (E.editorMode == COMMAND ) appendBuff.append(std::format("\x1b[{};{}H",E.screenrows + 2 , (int)E.statusMessage.length() + 1));
    

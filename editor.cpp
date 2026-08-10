@@ -13,8 +13,9 @@ editorConfig E ;
 void initEditor(){
   getWinSize();
   E.rowNumSize = numWidth(E.numrows()) + 2 ;
-  E.cx = 0; 
+  E.cx = 0 ;  
   E.cy = 0 ; 
+  E.rx = 0 ;  
   E.editorMode = EDITOR; 
   E.rowoff = 0 ; 
   E.coloff = 0 ; 

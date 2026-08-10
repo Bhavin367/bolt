@@ -1,4 +1,3 @@
-
 ### Completed Stuff 
 
 - Basic vim and custom motions ( LEFT RIGHT UP DOWN PAGE_UP PAGE_DOWN HOME END )
@@ -10,11 +9,12 @@
 - Added render rows for handling special cases like tabs Ctrl what not and also syntax highlighting 
 - Now motions to right is cutt off based on rendered charactors instead of being infinitely right 
 
+- ITS WORKSSSS, pretty much a basic text editor with vim motions and few features 
+
 ### Next Stuff 
 
 (Order doesnt make sense now im just writing down all jargon)
 
-- next we need proper text editing like insertion deleting, so expland on render part of erow
 - more vim and custom motions ( next word, delete word, change word ) 
 - syntax highlighting
 - Proper implementation of modes , Editor , insert visual .
@@ -23,7 +23,8 @@
 - need work on rest of editor modes ( with text editing )
 - add support for multiple arguments in command 
 
+- Needs a command proccessor or something like that 
+
 #### Jargon 
- 
-del operation sort off works but the bottlenect is dd for deleting whole row , termios only waits for fraction of a second for next input causing a second d to almost always miss 
-im thinking of a buffer for this sort of operation or increasign timelimit to 500ms to wait for second click , first options sounds nicer though 
+
+I'm writing this shit in BOLT hell yeahdhahdhadf  
