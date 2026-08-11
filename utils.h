@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <utility>
+#include <vector>
 #include "type.h"
 
 void die(const char* err);
@@ -32,3 +33,5 @@ void rtrim(std::string& s);
 void trim(std::string& s) ;
 
 int rowCxToRx(erow& row , int cx );
+
+std::vector<std::string> splitCommands(std::string& cmd ) ; 

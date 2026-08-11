@@ -63,3 +63,37 @@ int rowCxToRx(erow &row, int cx){
 
   return rx ; 
 };
+
+
+std::vector<std::string> splitCommands( std::string &cmd) {
+  std::string name ; 
+  std::vector<std::string> args ; 
+
+  trim(cmd); 
+
+
+}; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
