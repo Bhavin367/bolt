@@ -23,4 +23,4 @@ class commandManager {
 
 void resetCommandMode();
 void initCommandMode();
-
+void processCommand(int c );

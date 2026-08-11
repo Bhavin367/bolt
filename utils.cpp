@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "file.h"
 #include "type.h"
 #include <algorithm>
 
@@ -65,16 +66,15 @@ int rowCxToRx(erow &row, int cx){
 
 
 std::vector<std::string> splitCommands( std::string &cmd) {
-  trim(cmd) ;
+  trim(cmd) ; 
+  
   std::string current ; 
   std::vector<std::string> tokens ; 
 
   for (char c : cmd ) {
     if (c == ' '){
-      if (!current.empty()){
-        tokens.push_back(current) ; 
-        current.clear() ; 
-      }; 
+      tokens.emplace_back(current) ; 
+      current.clear() ; 
     } 
     else if ( c == '\r' || c == '\n')break;
 
@@ -83,7 +83,7 @@ std::vector<std::string> splitCommands( std::string &cmd) {
     };
   };
 
-  if (!current.empty()) tokens.push_back(current) ; 
+  if (!current.empty()) tokens.emplace_back(current) ; 
 
   return tokens ; 
 }; 

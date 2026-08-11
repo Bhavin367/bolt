@@ -2,6 +2,9 @@
 #include "utils.h"
 #include <vector>
 
+
+commandManager cmdManager ; 
+
 void resetCommandMode(){
   E.cx = E.lastCx ; 
   E.cy = E.lastCy ; 
@@ -17,14 +20,6 @@ void initCommandMode(){
   E.commandBuffer.clear() ;
   E.statusMessage = ":" ;
 }; 
-
-class commandManager {
-  private: 
-    std::unordered_map<std::string,commandFunc> commandTable  = 
-
-  public: 
-    void executeCommand()
-};
 
 commandManager::commandManager(){
   commandTable = {
@@ -60,6 +55,7 @@ commandManager::commandManager(){
 
       }},
     }; 
+
 };
 
 void commandManager::executeCommand(std::string& cmd ) {
@@ -68,59 +64,41 @@ void commandManager::executeCommand(std::string& cmd ) {
     return ; 
   };
 
-  std::vector<std::string> token ; 
+  std::vector<std::string> tokens = splitCommands(cmd); 
 
+  std::string name  = tokens[0] ; // main stuff like w wq q / and all that 
+
+  commandArgs args(tokens.begin() + 1 , tokens.end()) ;
+  auto it = commandTable.find(args[0]);
+  
+  if (it == commandTable.end()){ // end is one term after last actual value 
+    setStatusMessage("Command : {} not recogonised ", cmd ) ; 
+    return ;  
+  };
+
+  it->second(args);  
 };
 
+// it is basically unorderedlist(std::string,commandFunc) , so 
+// it->second basically pass arguments to commandFunc 
 
-// void executeCommand(std::string &command){
-//   if ( command.empty()) {
-//     setStatusMessage("No commands found !!! ");
-//     return;  
-//   }; 
-//
-//   trim(command); 
-//
-//   if (command == "q!") {
-//     close() ; 
-//     return ;  
-//   }
-//   else if ( command == "q"){
-//     if (E.dirty ) {
-//       setStatusMessage("Unsaved changes found in ''{}'' , use q! to force quit !! ", E.filename ); 
-//       return ; 
-//     }; 
-//     close(); 
-//     return ; 
-//   } 
-//   else if (command == "w") {
-//     saveFile(); 
-//     return ; 
-//   }
-//   else if (command == "wq"){
-//     saveFile() ; 
-//     close() ; 
-//     return ; 
-//   } ; 
-// };
-//
-// void processCommand(int c ){
-//   if (c == '\n' || c == '\r' ){
-//     executeCommand(E.commandBuffer); 
-//     resetCommandMode() ;  
-//   } 
-//   else if ( c == '\b' || c == BACKSPACE || c == ctrl('h')){
-//     if (!E.commandBuffer.empty()) {
-//       E.commandBuffer.pop_back() ; 
-//       E.statusMessage = ":" + E.commandBuffer ; 
-//     } else {
-//       resetCommandMode() ;  
-//     }; 
-//   }  
-//   else {
-//     E.commandBuffer += (char)c ;
-//     E.statusMessage = ":" + E.commandBuffer ;  
-//   };
-// };
-//
+void processCommand(int c ){
+  if (c == '\n' || c == '\r' ){
+    cmdManager.executeCommand(E.commandBuffer) ; 
+    resetCommandMode() ;  
+  } 
+  else if ( c == '\b' || c == BACKSPACE || c == ctrl('h')){
+    if (!E.commandBuffer.empty()) {
+      E.commandBuffer.pop_back() ; 
+      E.statusMessage = ":" + E.commandBuffer ; 
+    } else {
+      resetCommandMode() ;  
+    }; 
+  }  
+  else {
+    E.commandBuffer += (char)c ;
+    E.statusMessage = ":" + E.commandBuffer ;  
+  };
+};
+
 
