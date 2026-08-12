@@ -1,5 +1,6 @@
 #include "commands.h"
 #include "utils.h"
+#include <exception>
 #include <vector>
 
 
@@ -66,10 +67,15 @@ void commandManager::executeCommand(std::string& cmd ) {
 
   std::vector<std::string> tokens = splitCommands(cmd); 
 
+  if(tokens.empty()) {
+    setStatusMessage("Command processor error !!! ");
+    return ;  
+  } ; 
+
   std::string name  = tokens[0] ; // main stuff like w wq q / and all that 
 
   commandArgs args(tokens.begin() + 1 , tokens.end()) ;
-  auto it = commandTable.find(args[0]);
+  auto it = commandTable.find(name);
   
   if (it == commandTable.end()){ // end is one term after last actual value 
     setStatusMessage("Command : {} not recogonised ", cmd ) ; 
