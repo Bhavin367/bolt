@@ -1,4 +1,5 @@
 #include "editor.h"
+#include "render.h"
 #include <algorithm>
 
 editorConfig E ;
@@ -224,6 +225,10 @@ void editorProcessKey(){
     }
   } 
   else if (E.editorMode == INSERT ){
+    if (E.cy >= E.numrows()){
+      editorInsertRow("",E.cy);
+      updateRow(E.rows[E.cy]); 
+    }; 
     switch (c) {
       case '\x1b':
         E.editorMode = EDITOR ; 
@@ -350,7 +355,6 @@ void editorDelChar(){
     E.cy-- ;  
   }; 
 };
-
 
 
 

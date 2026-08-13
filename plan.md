@@ -27,4 +27,4 @@
 
 #### Jargon 
 
-I'm writing this shit in BOLT hell yeahdhahdhadf  
+another error is backspace on empty line dont go to prev line  
