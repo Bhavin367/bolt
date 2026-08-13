@@ -151,7 +151,7 @@ void editorMoveCursor(const int key){
     }
 
     row = (E.cy >= E.numrows()) ? nullptr : &E.rows[E.cy] ; 
-    int rowLen = row ? row->size()   : 0 ; 
+    int rowLen = row ? static_cast<int>(row->chars.size())   : 0 ; 
     if (E.cx > rowLen ) E.cx = rowLen ; 
 };
 
