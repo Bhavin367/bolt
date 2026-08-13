@@ -1,12 +1,5 @@
 #include "editor.h"
-#include "file.h"
-#include "render.h"
-#include "type.h"
-#include "utils.h"
-#include <cerrno>
-#include <cstddef>
-#include <sys/ioctl.h>
-#include <unistd.h>
+#include <algorithm>
 
 editorConfig E ;
 
@@ -128,7 +121,7 @@ void editorMoveCursor(const int key){
       case '$' : 
       case END :
       case ctrl('l'): 
-        if (row) E.cx = row->size() ; 
+        if (row) E.cx = static_cast<int>(row->chars.size()) ; 
         break ; 
    
       case PAGE_UP : 
@@ -275,10 +268,10 @@ void editorInsertNewLine(){
   if (E.cx == 0 ) {
     editorInsertRow("",E.cy) ; 
   } else {
-    erow& row  = E.rows[E.cy] ;  
-    editorInsertRow(row.chars.substr(E.cx),E.cy + 1) ; 
-    row.chars.erase(E.cx);
-    updateRow(row) ; 
+    int at  = std::min(E.cx,static_cast<int>(E.rows[E.cy].size())); 
+    editorInsertRow(E.rows[E.cy].chars.substr(at),E.cy + 1) ; 
+    E.rows[E.cy].chars.erase(E.cx);
+    updateRow(E.rows[E.cy]) ; 
   };
   E.cx = 0 ; 
   E.cy ++ ; 

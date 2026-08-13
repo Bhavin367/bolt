@@ -9,6 +9,8 @@
 #include "commands.h"
 #include "utils.h"
 #include "render.h"
+#include <algorithm>
+
 
 void getWinSize();
 
