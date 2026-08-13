@@ -10,6 +10,7 @@
 #include "utils.h"
 #include "render.h"
 #include <algorithm>
+#include "autopair.h"
 
 
 void getWinSize();

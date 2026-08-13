@@ -11,6 +11,8 @@
 
 - ITS WORKSSSS, pretty much a basic text editor with vim motions and few features 
 
+- I gotta command manager which allows me to expand and add more commands easily yeeeeeeeeeeee
+
 ### Next Stuff 
 
 (Order doesnt make sense now im just writing down all jargon)
@@ -21,10 +23,9 @@
 - File tree or side bar or whatever you call that 
 
 - need work on rest of editor modes ( with text editing )
-- add support for multiple arguments in command 
 
 - Needs a command proccessor or something like that 
 
 #### Jargon 
 
-another error is backspace on empty line dont go to prev line  
+- Autocomplete = inserting one of autopairs twice should skip over it like in nvim and if an autopair is empty backspace should remove both at once 

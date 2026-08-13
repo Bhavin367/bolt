@@ -1,6 +1,4 @@
 #include "editor.h"
-#include "render.h"
-#include <algorithm>
 
 editorConfig E ;
 
@@ -248,9 +246,17 @@ void editorProcessKey(){
       case '\r' :
       case '\n' : 
         editorInsertNewLine();
-        break ; 
+        break ;  
 
       default: 
+        auto it = AUTO_PAIRS.find(c);
+        if(it != AUTO_PAIRS.end()){
+          editorInsertChar(it->first);
+          editorInsertChar(it->second);
+          E.cx-- ; 
+          break ; 
+        };
+
         editorInsertChar(c) ; 
         break ; 
     };
