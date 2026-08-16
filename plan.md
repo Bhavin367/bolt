@@ -12,6 +12,7 @@
 - ITS WORKSSSS, pretty much a basic text editor with vim motions and few features 
 
 - I gotta command manager which allows me to expand and add more commands easily yeeeeeeeeeeee
+- Added autopairing for brackes
 
 ### Next Stuff 
 
@@ -24,8 +25,7 @@
 
 - need work on rest of editor modes ( with text editing )
 
-- Needs a command proccessor or something like that 
 
 #### Jargon 
 
-- Autocomplete = inserting one of autopairs twice should skip over it like in nvim and if an autopair is empty backspace should remove both at once 
+so next thing would be a way to open a different file withing bolt like :e , can do that before a file tree seems much simple  
