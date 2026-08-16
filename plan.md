@@ -28,4 +28,9 @@
 
 #### Jargon 
 
-so next thing would be a way to open a different file withing bolt like :e , can do that before a file tree seems much simple  
+so next thing would be a way to open a different file withing bolt like :e , can do that before a file tree seems much simple 
+
+
+#### Bolt  testing 
+
+- todo.py in ./bolt 
