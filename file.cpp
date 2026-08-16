@@ -14,6 +14,7 @@ void openFile(const std::string& filename){
    
   if (!fp.is_open()) die("Open file function failed to open !!!");
   
+  E.rows.clear() ;  
   E.filename = filename ;
 
   std::string line ;

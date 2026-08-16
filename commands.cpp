@@ -1,4 +1,5 @@
 #include "commands.h"
+#include "file.h"
 #include "utils.h"
 #include <exception>
 #include <vector>
@@ -53,9 +54,30 @@ commandManager::commandManager(){
         if (!args.empty()) E.filename = args[0] ; 
 
         saveFile(); 
-
       }},
-    }; 
+
+      {"e",[](const commandArgs &args){
+        if (args.empty()) {
+          setStatusMessage("Required format => :e <filename> ");
+          return ;  
+        };
+
+        if (args.size() > 1 ) {
+          setStatusMessage("Too many arguments ");
+          return ; 
+        };
+
+        if (E.dirty) {
+          setStatusMessage("Save {} before opening {}",E.filename,args[0]);
+          return ;  
+        };
+
+        if (!args.empty()) E.filename = args[0];
+        resetEditorState(); 
+        openFile(E.filename);
+    }},
+  
+  }; 
 
 };
 

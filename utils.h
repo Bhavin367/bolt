@@ -8,6 +8,8 @@
 
 void die(const char* err);
 
+void clearScreen();
+
 void close() ; 
 
 constexpr char ctrl(char k){
@@ -34,4 +36,6 @@ void trim(std::string& s) ;
 
 int rowCxToRx(erow& row , int cx );
 
-std::vector<std::string> splitCommands(std::string& cmd ) ; 
+std::vector<std::string> splitCommands(std::string& cmd ) ;
+
+void resetEditorState();

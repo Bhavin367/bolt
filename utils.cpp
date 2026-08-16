@@ -2,6 +2,7 @@
 #include "file.h"
 #include "type.h"
 #include <algorithm>
+#include <cstdint>
 
 void die(const char* err){
   write(STDIN_FILENO,"\x1b[2J",4); 
@@ -11,9 +12,13 @@ void die(const char* err){
   EXIT_FAILURE;
 };
 
-void close(){
+void clearScreen(){
     write(STDOUT_FILENO,"\x1b[2J",4);
     write(STDOUT_FILENO,"\x1b[H",3);
+};
+
+void close(){
+    clearScreen();
     std::exit(EXIT_SUCCESS);
     return ;
 } ;
@@ -89,7 +94,17 @@ std::vector<std::string> splitCommands( std::string &cmd) {
 }; 
 
 
-
+void resetEditorState(){
+  E.cx = 0 ; 
+  E.cy = 0 ; 
+  E.rx = 0 ; 
+  E.editorMode  = EDITOR ; 
+  E.rowoff = 0 ; 
+  E.coloff = 0 ; 
+  E.dirty = false ; 
+  E.rowNumSize = numWidth(E.numrows()) + 2 ; 
+  setStatusMessage(" ") ;
+};
 
 
 
